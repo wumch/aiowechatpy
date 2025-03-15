@@ -32,7 +32,7 @@ master: [【阅读文档】](https://wechatpy.readthedocs.org/zh_CN/master/) [�
 推荐使用 pip 进行安装:
 
 ```bash
-pip install wechatpy
+pip install git+https://github.com/wumch/wechatpy.git
 ```
 
 升级版本：
