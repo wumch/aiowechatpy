@@ -46,6 +46,8 @@ class WeChatPay:
     """红包接口"""
     transfer = api.WeChatTransfer()
     """企业付款接口"""
+    mch_transfer = api.WeChatMchTransfer()
+    """商户转账接口"""
     coupon = api.WeChatCoupon()
     """代金券接口"""
     order = api.WeChatOrder()
