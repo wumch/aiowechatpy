@@ -1,16 +1,12 @@
 # -*- coding: utf-8 -*-
 
 from typing import Optional, Final, List
-import random
 from enum import StrEnum
-from datetime import datetime
 from pydantic import BaseModel
-
-from wechatpy.pay.utils import get_external_ip, rsa_encrypt
-from wechatpy.pay.api.base import BaseWeChatPayAPI
+from wechatpy.pay.v3.api.base import BaseWeChatPayAPI
 
 
-class MchTransferSceneReportInfo(BaseModel):
+class WeChatMchTransferSceneReportInfo(BaseModel):
     """
     【商户转账场景报备信息】 各转账场景下需报备的内容，商户需要按照所属转账场景规则传参。
 
@@ -24,7 +20,7 @@ class MchTransferSceneReportInfo(BaseModel):
     info_content: str
 
 
-class MchTransferState(StrEnum):
+class WeChatMchTransferState(StrEnum):
     """商户转账结果。
 
     Attributes:
@@ -48,14 +44,14 @@ class MchTransferState(StrEnum):
     cancelled: Final[str] = 'CANCELLED'
 
 
-class MchTransferResult(BaseModel):
+class WeChatMchTransferResult(BaseModel):
     """商户转账结果"""
     out_bill_no: str
     transfer_bill_no: str
     create_time: str
-    state: MchTransferState
+    state: WeChatMchTransferState
     fail_reason: Optional[str] = None
-    package_info: Optional[str] = None # 【跳转领取页面的package信息】 跳转微信支付收款页的package信息，APP调起用户确认收款或者JSAPI调起用户确认收款 时需要使用的参数。
+    package_info: Optional[str] = None  # 【跳转领取页面的package信息】 跳转微信支付收款页的package信息，APP调起用户确认收款或者JSAPI调起用户确认收款 时需要使用的参数。
 
 
 class WeChatMchTransfer(BaseWeChatPayAPI):
@@ -64,6 +60,7 @@ class WeChatMchTransfer(BaseWeChatPayAPI):
 
     @see: https://pay.weixin.qq.com/doc/v3/merchant/4012716434
     """
+
     def transfer(
         self,
         out_bill_no: str,
@@ -71,11 +68,11 @@ class WeChatMchTransfer(BaseWeChatPayAPI):
         openid: str,
         amount: int,
         remark: str,
-        scene_report_info_list: List[MchTransferSceneReportInfo],
+        scene_report_info_list: List[WeChatMchTransferSceneReportInfo],
         user_name: Optional[str] = None,
         notify_url: Optional[str] = None,
         user_recv_perception: Optional[str] = None
-    ) -> Optional[MchTransferResult]:
+    ) -> Optional[WeChatMchTransferResult]:
         """
         商家转账接口
 
@@ -109,71 +106,7 @@ class WeChatMchTransfer(BaseWeChatPayAPI):
             data["notify_url"] = notify_url
         if user_recv_perception is not None:
             data["user_recv_perception"] = user_recv_perception
-        res = self._post("v3/fund-app/mch-transfer/transfer-bills", data=data)
+        res = self._post("fund-app/mch-transfer/transfer-bills", data=data)
         if not res:
             return None
-        return MchTransferResult.model_validate(res)
-
-    def query(self, out_trade_no):
-        """
-        企业付款查询接口
-
-        :param out_trade_no: 商户调用企业付款API时使用的商户订单号
-        :return: 返回的结果数据
-        """
-        data = {
-            "appid": self.appid,
-            "partner_trade_no": out_trade_no,
-        }
-        return self._post("mmpaymkttransfers/gettransferinfo", data=data)
-
-    def transfer_bankcard(self, true_name, bank_card_no, bank_code, amount, desc=None, out_trade_no=None):
-        """
-        企业付款到银行卡接口
-
-        :param true_name: 开户人名称
-        :param bank_card_no: 银行卡号
-        :param bank_code: 银行编号
-        :param amount: 付款金额，单位分
-        :param desc: 付款说明
-        :param out_trade_no: 可选，商户订单号，需保持唯一性，默认自动生成
-        :return: 返回的结果信息
-        """
-        if not out_trade_no:
-            now = datetime.now()
-            out_trade_no = f"{self.mch_id}{now.strftime('%Y%m%d%H%M%S')}{random.randint(1000, 10000)}"
-        data = {
-            "mch_id": self.mch_id,
-            "partner_trade_no": out_trade_no,
-            "amount": amount,
-            "desc": desc,
-            "enc_bank_no": self._rsa_encrypt(bank_card_no),
-            "enc_true_name": self._rsa_encrypt(true_name),
-            "bank_code": bank_code,
-        }
-        return self._post("mmpaysptrans/pay_bank", data=data)
-
-    def query_bankcard(self, out_trade_no):
-        """
-        企业付款查询接口
-
-        :param out_trade_no: 商户调用企业付款API时使用的商户订单号
-        :return: 返回的结果数据
-        """
-        data = {
-            "mch_id": self.mch_id,
-            "partner_trade_no": out_trade_no,
-        }
-        return self._post("mmpaysptrans/query_bank", data=data)
-
-    def get_rsa_public_key(self):
-        data = {
-            "mch_id": self.mch_id,
-            "sign_type": "MD5",
-        }
-        return self._post("https://fraud.mch.weixin.qq.com/risk/getpublickey", data=data)
-
-    def _rsa_encrypt(self, data):
-        if not getattr(self, "_rsa_public_key", None):
-            self._rsa_public_key = self.get_rsa_public_key()["pub_key"]
-        return rsa_encrypt(data, self._rsa_public_key)
+        return WeChatMchTransferResult.model_validate(res)

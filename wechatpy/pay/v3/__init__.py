@@ -55,6 +55,8 @@ class WeChatPay:
     banks = api.WeChatBanks()
     # 电商收付通接口
     ecommerce = api.WeChatEcommerce()
+    # 商户转账接口
+    mch_transfer = api.WeChatMchTransfer()
 
     API_BASE_URL = "https://api.mch.weixin.qq.com/v3/"
 
