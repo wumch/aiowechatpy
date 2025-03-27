@@ -2,13 +2,13 @@
 
 
 class SessionStorage:
-    def get(self, key, default=None):
+    async def get(self, key, default=None):
         raise NotImplementedError()
 
-    def set(self, key, value, ttl=None):
+    async def set(self, key, value, ttl=None):
         raise NotImplementedError()
 
-    def delete(self, key):
+    async def delete(self, key):
         raise NotImplementedError()
 
     def __getitem__(self, key):

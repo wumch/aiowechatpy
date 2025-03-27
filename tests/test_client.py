@@ -845,7 +845,7 @@ class WeChatClientTestCase(unittest.TestCase):
         self.assertEqual("13123456789", res["phone_info"]["purePhoneNumber"])
 
     def test_client_expires_at_consistency(self):
-        from redis import Redis
+        from redis.asyncio import Redis
         from wechatpy.session.redisstorage import RedisStorage
 
         redis = Redis()

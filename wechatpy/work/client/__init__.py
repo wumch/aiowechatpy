@@ -44,15 +44,15 @@ class WeChatClient(BaseWeChatClient):
     ):
         self.corp_id = corp_id
         self.secret = secret
-        super().__init__(corp_id, access_token, session, timeout, auto_retry)
+        super().__init__(corp_id, session, timeout, auto_retry)
 
     @property
     def access_token_key(self):
         return f"{self.corp_id}_{self.secret[:10]}_access_token"
 
-    def fetch_access_token(self):
+    async def fetch_access_token(self):
         """Fetch access token"""
-        return self._fetch_access_token(
+        return await self._fetch_access_token(
             url="https://qyapi.weixin.qq.com/cgi-bin/gettoken",
             params={"corpid": self.corp_id, "corpsecret": self.secret},
         )

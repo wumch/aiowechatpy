@@ -7,13 +7,13 @@ class MemoryStorage(SessionStorage):
     def __init__(self):
         self._data = {}
 
-    def get(self, key, default=None):
+    async def get(self, key, default=None):
         return self._data.get(key, default)
 
-    def set(self, key, value, ttl=None):
+    async def set(self, key, value, ttl=None):
         if value is None:
             return
         self._data[key] = value
 
-    def delete(self, key):
+    async def delete(self, key):
         self._data.pop(key, None)

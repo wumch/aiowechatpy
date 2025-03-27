@@ -13,7 +13,7 @@ import logging
 import time
 from urllib.parse import quote
 
-import requests
+import httpx
 import xmltodict
 
 from wechatpy.client import WeChatComponentClient
@@ -50,7 +50,7 @@ class BaseWeChatComponent:
         :param component_token: 公众号消息校验Token
         :param encoding_aes_key: 公众号消息加解密Key
         """
-        self._http = requests.Session()
+        self._http = httpx.AsyncClient()
         self.component_appid = component_appid
         self.component_appsecret = component_appsecret
         self.expires_at = None
@@ -58,11 +58,10 @@ class BaseWeChatComponent:
         self.session = session or MemoryStorage()
         self.auto_retry = auto_retry
 
-    @property
-    def component_verify_ticket(self):
-        return self.session.get(f"{self.component_appid}_component_verify_ticket")
+    async def component_verify_ticket(self):
+        return await self.session.get(f"{self.component_appid}_component_verify_ticket")
 
-    def _request(self, method, url_or_endpoint, **kwargs):
+    async def _request(self, method, url_or_endpoint, **kwargs):
         if not url_or_endpoint.startswith(("http://", "https://")):
             api_base_url = kwargs.pop("api_base_url", self.API_BASE_URL)
             url = f"{api_base_url}{url_or_endpoint}"
@@ -76,16 +75,16 @@ class BaseWeChatComponent:
         if isinstance(kwargs["data"], dict):
             kwargs["data"] = json.dumps(kwargs["data"])
 
-        res = self._http.request(method=method, url=url, **kwargs)
+        res = await self._http.request(method=method, url=url, **kwargs)
         try:
             res.raise_for_status()
-        except requests.RequestException as reqe:
+        except httpx.HTTPError as reqe:
             raise WeChatClientException(
                 errcode=None,
                 errmsg=None,
                 client=self,
                 request=reqe.request,
-                response=reqe.response,
+                response=res,
             )
 
         return self._handle_result(res, method, url, **kwargs)
@@ -116,7 +115,7 @@ class BaseWeChatComponent:
                 raise WeChatClientException(errcode, errmsg, client=self, request=res.request, response=res)
         return result
 
-    def fetch_access_token(self):
+    async def fetch_access_token(self):
         """
         获取 component_access_token
         详情请参考 https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list\
@@ -125,30 +124,30 @@ class BaseWeChatComponent:
         :return: 返回的 JSON 数据包
         """
         url = f"{self.API_BASE_URL}{'/component/api_component_token'}"
-        return self._fetch_access_token(
+        return await self._fetch_access_token(
             url=url,
             data=json.dumps(
                 {
                     "component_appid": self.component_appid,
                     "component_appsecret": self.component_appsecret,
-                    "component_verify_ticket": self.component_verify_ticket,
+                    "component_verify_ticket": await self.component_verify_ticket(),
                 }
             ),
         )
 
-    def _fetch_access_token(self, url, data):
+    async def _fetch_access_token(self, url, data):
         """The real fetch access token"""
         logger.info("Fetching component access token")
-        res = self._http.post(url=url, data=data)
+        res = await self._http.post(url=url, data=data)
         try:
             res.raise_for_status()
-        except requests.RequestException as reqe:
+        except httpx.HTTPError as reqe:
             raise WeChatClientException(
                 errcode=None,
                 errmsg=None,
                 client=self,
                 request=reqe.request,
-                response=reqe.response,
+                response=res,
             )
         result = res.json()
         if "errcode" in result and result["errcode"] != 0:
@@ -163,14 +162,13 @@ class BaseWeChatComponent:
         expires_in = 7200
         if "expires_in" in result:
             expires_in = result["expires_in"]
-        self.session.set(f"{self.component_appid}_component_access_token", result["component_access_token"], expires_in)
+        await self.session.set(f"{self.component_appid}_component_access_token", result["component_access_token"], expires_in)
         self.expires_at = int(time.time()) + expires_in
         return result
 
-    @property
-    def access_token(self):
+    async def access_token(self):
         """WeChat component access token"""
-        access_token = self.session.get(f"{self.component_appid}_component_access_token")
+        access_token = await self.session.get(f"{self.component_appid}_component_access_token")
         if access_token:
             if not self.expires_at:
                 # user provided access_token, just return it
@@ -180,14 +178,14 @@ class BaseWeChatComponent:
             if self.expires_at - timestamp > 60:
                 return access_token
 
-        self.fetch_access_token()
-        return self.session.get(f"{self.component_appid}_component_access_token")
+        await self.fetch_access_token()
+        return await self.session.get(f"{self.component_appid}_component_access_token")
 
-    def get(self, url, **kwargs):
-        return self._request(method="get", url_or_endpoint=url, **kwargs)
+    async def get(self, url, **kwargs):
+        return await self._request(method="get", url_or_endpoint=url, **kwargs)
 
-    def post(self, url, **kwargs):
-        return self._request(method="post", url_or_endpoint=url, **kwargs)
+    async def post(self, url, **kwargs):
+        return await self._request(method="post", url_or_endpoint=url, **kwargs)
 
 
 class WeChatComponent(BaseWeChatComponent):
@@ -205,22 +203,22 @@ class WeChatComponent(BaseWeChatComponent):
         redirect_uri = quote(redirect_uri, safe="")
         return f"{url}component_appid={self.component_appid}&pre_auth_code={self.create_preauthcode()['pre_auth_code']}&redirect_uri={redirect_uri}"
 
-    def create_preauthcode(self):
+    async def create_preauthcode(self):
         """
         获取预授权码
         """
-        return self.post(
+        return await self.post(
             "/component/api_create_preauthcode",
             data={"component_appid": self.component_appid},
         )
 
-    def _query_auth(self, authorization_code):
+    async def _query_auth(self, authorization_code):
         """
         使用授权码换取公众号的授权信息
 
         :params authorization_code: 授权code,会在授权成功时返回给第三方平台，详见第三方平台授权流程说明
         """
-        return self.post(
+        return await self.post(
             "/component/api_query_auth",
             data={
                 "component_appid": self.component_appid,
@@ -228,13 +226,13 @@ class WeChatComponent(BaseWeChatComponent):
             },
         )
 
-    def query_auth(self, authorization_code):
+    async def query_auth(self, authorization_code):
         """
         使用授权码换取公众号的授权信息,同时储存token信息
 
         :params authorization_code: 授权code,会在授权成功时返回给第三方平台，详见第三方平台授权流程说明
         """
-        result = self._query_auth(authorization_code)
+        result = await self._query_auth(authorization_code)
 
         assert (
             result is not None and "authorization_info" in result and "authorizer_appid" in result["authorization_info"]
@@ -250,7 +248,7 @@ class WeChatComponent(BaseWeChatComponent):
             expires_in = 7200
             if "expires_in" in result["authorization_info"]:
                 expires_in = result["authorization_info"]["expires_in"]
-            self.session.set(access_token_key, access_token, expires_in)
+            await self.session.set(access_token_key, access_token, expires_in)
         if (
             "authorizer_refresh_token" in result["authorization_info"]
             and result["authorization_info"]["authorizer_refresh_token"]
@@ -258,17 +256,17 @@ class WeChatComponent(BaseWeChatComponent):
             refresh_token = result["authorization_info"]["authorizer_refresh_token"]
             refresh_token_key = f"{authorizer_appid}_refresh_token"
             # refresh_token 需要永久储存，不建议使用内存储存，否则每次重启服务需要重新扫码授权
-            self.session.set(refresh_token_key, refresh_token)
+            await self.session.set(refresh_token_key, refresh_token)
         return result
 
-    def refresh_authorizer_token(self, authorizer_appid, authorizer_refresh_token):
+    async def refresh_authorizer_token(self, authorizer_appid, authorizer_refresh_token):
         """
         获取（刷新）授权公众号的令牌
 
         :params authorizer_appid: 授权方appid
         :params authorizer_refresh_token: 授权方的刷新令牌
         """
-        return self.post(
+        return await self.post(
             "/component/api_authorizer_token",
             data={
                 "component_appid": self.component_appid,
@@ -277,13 +275,13 @@ class WeChatComponent(BaseWeChatComponent):
             },
         )
 
-    def get_authorizer_info(self, authorizer_appid):
+    async def get_authorizer_info(self, authorizer_appid):
         """
         获取授权方的账户信息
 
         :params authorizer_appid: 授权方appid
         """
-        return self.post(
+        return await self.post(
             "/component/api_get_authorizer_info",
             data={
                 "component_appid": self.component_appid,
@@ -291,14 +289,14 @@ class WeChatComponent(BaseWeChatComponent):
             },
         )
 
-    def get_authorizer_list(self, offset=0, count=500):
+    async def get_authorizer_list(self, offset=0, count=500):
         """
         拉取所有已授权的帐号信息
 
         :params offset: 偏移位置/起始位置
         :params count: 拉取数量
         """
-        return self.post(
+        return await self.post(
             "/component/api_get_authorizer_list",
             data={
                 "component_appid": self.component_appid,
@@ -307,14 +305,14 @@ class WeChatComponent(BaseWeChatComponent):
             },
         )
 
-    def get_authorizer_option(self, authorizer_appid, option_name):
+    async def get_authorizer_option(self, authorizer_appid, option_name):
         """
         获取授权方的选项设置信息
 
         :params authorizer_appid: 授权公众号appid
         :params option_name: 选项名称
         """
-        return self.post(
+        return await self.post(
             "/component/api_get_authorizer_option",
             data={
                 "component_appid": self.component_appid,
@@ -323,7 +321,7 @@ class WeChatComponent(BaseWeChatComponent):
             },
         )
 
-    def set_authorizer_option(self, authorizer_appid, option_name, option_value):
+    async def set_authorizer_option(self, authorizer_appid, option_name, option_value):
         """
         设置授权方的选项信息
 
@@ -331,7 +329,7 @@ class WeChatComponent(BaseWeChatComponent):
         :params option_name: 选项名称
         :params option_value: 设置的选项值
         """
-        return self.post(
+        return await self.post(
             "/component/api_set_authorizer_option",
             data={
                 "component_appid": self.component_appid,
@@ -341,7 +339,7 @@ class WeChatComponent(BaseWeChatComponent):
             },
         )
 
-    def get_client_by_appid(self, authorizer_appid):
+    async def get_client_by_appid(self, authorizer_appid):
         """
         通过 authorizer_appid 获取 Client 对象
 
@@ -354,13 +352,13 @@ class WeChatComponent(BaseWeChatComponent):
         assert refresh_token
 
         if not access_token:
-            ret = self.refresh_authorizer_token(authorizer_appid, refresh_token)
+            ret = await self.refresh_authorizer_token(authorizer_appid, refresh_token)
             access_token = ret["authorizer_access_token"]
             access_token_key = f"{authorizer_appid}_access_token"
             expires_in = 7200
             if "expires_in" in ret:
                 expires_in = ret["expires_in"]
-            self.session.set(access_token_key, access_token, expires_in)
+            await self.session.set(access_token_key, access_token, expires_in)
 
         return WeChatComponentClient(authorizer_appid, self, session=self.session)
 
@@ -408,7 +406,7 @@ class ComponentOAuth:
         :param component: WeChatComponent
         :param app_id: 微信公众号 app_id
         """
-        self._http = requests.Session()
+        self._http = httpx.AsyncClient()
         self.app_id = app_id
         self.component = component
 
@@ -440,13 +438,13 @@ class ComponentOAuth:
         url_list.append("#wechat_redirect")
         return "".join(url_list)
 
-    def fetch_access_token(self, code):
+    async def fetch_access_token(self, code):
         """获取 access_token
 
         :param code: 授权完成跳转回来后 URL 中的 code 参数
         :return: JSON 数据包
         """
-        res = self._get(
+        res = await self._get(
             "sns/oauth2/component/access_token",
             params={
                 "appid": self.app_id,
@@ -463,13 +461,13 @@ class ComponentOAuth:
         self.scope = res["scope"]
         return res
 
-    def refresh_access_token(self, refresh_token):
+    async def refresh_access_token(self, refresh_token):
         """刷新 access token
 
         :param refresh_token: OAuth2 refresh token
         :return: JSON 数据包
         """
-        res = self._get(
+        res = await self._get(
             "sns/oauth2/component/refresh_token",
             params={
                 "appid": self.app_id,
@@ -486,7 +484,7 @@ class ComponentOAuth:
         self.scope = res["scope"]
         return res
 
-    def get_user_info(self, openid=None, access_token=None, lang="zh_CN"):
+    async def get_user_info(self, openid=None, access_token=None, lang="zh_CN"):
         """获取用户基本信息（需授权作用域为snsapi_userinfo）
 
         如果网页授权作用域为snsapi_userinfo，则此时开发者可以通过access_token和openid拉取用户信息了。
@@ -498,12 +496,12 @@ class ComponentOAuth:
         """
         openid = openid or self.open_id
         access_token = access_token or self.access_token
-        return self._get(
+        return await self._get(
             "sns/userinfo",
             params={"access_token": access_token, "openid": openid, "lang": lang},
         )
 
-    def _request(self, method, url_or_endpoint, **kwargs):
+    async def _request(self, method, url_or_endpoint, **kwargs):
         if not url_or_endpoint.startswith(("http://", "https://")):
             url = f"{self.API_BASE_URL}{url_or_endpoint}"
         else:
@@ -514,16 +512,16 @@ class ComponentOAuth:
             body = body.encode("utf-8")
             kwargs["data"] = body
 
-        res = self._http.request(method=method, url=url, **kwargs)
+        res = await self._http.request(method=method, url=url, **kwargs)
         try:
             res.raise_for_status()
-        except requests.RequestException as reqe:
+        except httpx.HTTPError as reqe:
             raise WeChatOAuthException(
                 errcode=None,
                 errmsg=None,
                 client=self,
                 request=reqe.request,
-                response=reqe.response,
+                response=res,
             )
 
         return self._handle_result(res, method=method, url=url, **kwargs)
@@ -552,5 +550,5 @@ class ComponentOAuth:
                 raise WeChatComponentOAuthException(errcode, errmsg, client=self, request=res.request, response=res)
         return result
 
-    def _get(self, url, **kwargs):
-        return self._request(method="get", url_or_endpoint=url, **kwargs)
+    async def _get(self, url, **kwargs):
+        return await self._request(method="get", url_or_endpoint=url, **kwargs)
