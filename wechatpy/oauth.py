@@ -11,7 +11,7 @@
 import json
 from urllib.parse import quote
 
-import requests
+import httpx
 
 from wechatpy.exceptions import WeChatOAuthException
 
@@ -40,9 +40,9 @@ class WeChatOAuth:
         self.redirect_uri = redirect_uri
         self.scope = scope
         self.state = state
-        self._http = requests.Session()
+        self._http = httpx.AsyncClient()
 
-    def _request(self, method, url_or_endpoint, **kwargs):
+    async def _request(self, method, url_or_endpoint, **kwargs):
         if not url_or_endpoint.startswith(("http://", "https://")):
             url = f"{self.API_BASE_URL}{url_or_endpoint}"
         else:
@@ -53,16 +53,16 @@ class WeChatOAuth:
             body = body.encode("utf-8")
             kwargs["data"] = body
 
-        res = self._http.request(method=method, url=url, **kwargs)
+        res = await self._http.request(method=method, url=url, **kwargs)
         try:
             res.raise_for_status()
-        except requests.RequestException as reqe:
+        except httpx.HTTPError as reqe:
             raise WeChatOAuthException(
                 errcode=None,
                 errmsg=None,
                 client=self,
                 request=reqe.request,
-                response=reqe.response,
+                response=res,
             )
         result = json.loads(res.content.decode("utf-8", "ignore"), strict=False)
 
@@ -73,8 +73,8 @@ class WeChatOAuth:
 
         return result
 
-    def _get(self, url, **kwargs):
-        return self._request(method="get", url_or_endpoint=url, **kwargs)
+    async def _get(self, url, **kwargs):
+        return await self._request(method="get", url_or_endpoint=url, **kwargs)
 
     @property
     def authorize_url(self):
@@ -118,13 +118,13 @@ class WeChatOAuth:
         url_list.append("#wechat_redirect")
         return "".join(url_list)
 
-    def fetch_access_token(self, code):
+    async def fetch_access_token(self, code):
         """获取 access_token
 
         :param code: 授权完成跳转回来后 URL 中的 code 参数
         :return: JSON 数据包
         """
-        res = self._get(
+        res = await self._get(
             "sns/oauth2/access_token",
             params={
                 "appid": self.app_id,
@@ -139,13 +139,13 @@ class WeChatOAuth:
         self.expires_in = res["expires_in"]
         return res
 
-    def refresh_access_token(self, refresh_token):
+    async def refresh_access_token(self, refresh_token):
         """刷新 access token
 
         :param refresh_token: OAuth2 refresh token
         :return: JSON 数据包
         """
-        res = self._get(
+        res = await self._get(
             "sns/oauth2/refresh_token",
             params={
                 "appid": self.app_id,
@@ -159,7 +159,7 @@ class WeChatOAuth:
         self.expires_in = res["expires_in"]
         return res
 
-    def get_user_info(self, openid=None, access_token=None, lang="zh_CN"):
+    async def get_user_info(self, openid=None, access_token=None, lang="zh_CN"):
         """获取用户信息
 
         :param openid: 可选，微信 openid，默认获取当前授权用户信息
@@ -169,12 +169,12 @@ class WeChatOAuth:
         """
         openid = openid or self.open_id
         access_token = access_token or self.access_token
-        return self._get(
+        return await self._get(
             "sns/userinfo",
             params={"access_token": access_token, "openid": openid, "lang": lang},
         )
 
-    def check_access_token(self, openid=None, access_token=None):
+    async def check_access_token(self, openid=None, access_token=None):
         """检查 access_token 有效性
 
         :param openid: 可选，微信 openid，默认获取当前授权用户信息
@@ -183,7 +183,7 @@ class WeChatOAuth:
         """
         openid = openid or self.open_id
         access_token = access_token or self.access_token
-        res = self._get("sns/auth", params={"access_token": access_token, "openid": openid})
+        res = await self._get("sns/auth", params={"access_token": access_token, "openid": openid})
         if res["errcode"] == 0:
             return True
         return False

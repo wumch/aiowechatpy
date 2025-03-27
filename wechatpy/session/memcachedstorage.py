@@ -15,20 +15,20 @@ class MemcachedStorage(SessionStorage):
     def key_name(self, key):
         return f"{self.prefix}:{key}"
 
-    def get(self, key, default=None):
+    async def get(self, key, default=None):
         key = self.key_name(key)
-        value = self.mc.get(key)
+        value = await self.mc.get(key)
         if value is None:
             return default
         return json.loads(to_text(value))
 
-    def set(self, key, value, ttl=0):
+    async def set(self, key, value, ttl=0):
         if value is None:
             return
         key = self.key_name(key)
         value = json.dumps(value)
-        self.mc.set(key, value, ttl)
+        await self.mc.set(key, value, ttl)
 
-    def delete(self, key):
+    async def delete(self, key):
         key = self.key_name(key)
-        self.mc.delete(key)
+        await self.mc.delete(key)

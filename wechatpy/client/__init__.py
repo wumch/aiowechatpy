@@ -107,7 +107,7 @@ class WeChatComponentClient(WeChatClient):
     def refresh_token_key(self):
         return f"{self.appid}_refresh_token"
 
-    async def access_token(self):
+    async def get_access_token(self):
         access_token = await self.session.get(self.access_token_key)
         if not access_token:
             await self.fetch_access_token()

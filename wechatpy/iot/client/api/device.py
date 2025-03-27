@@ -19,7 +19,7 @@ class IotDevice(BaseWeChatAPI):
         result = self._post("get_device_ticket", json=data)
         return result
 
-    def reset_device(self, ilink_im_sdk_id):
+    async def reset_device(self, ilink_im_sdk_id):
         """
         重置设备
         https://iot.weixin.qq.com/doc?page=3-5
@@ -28,10 +28,10 @@ class IotDevice(BaseWeChatAPI):
         :return:
         """
         data = {"ilink_im_sdk_id": ilink_im_sdk_id}
-        result = self._post("reset_device", json=data)
+        result = await self._post("reset_device", json=data)
         return result
 
-    def reset_public_device(self, ilink_im_sdk_id):
+    async def reset_public_device(self, ilink_im_sdk_id):
         """
         重置公共设备
         https://iot.weixin.qq.com/doc?page=3-5
@@ -40,10 +40,10 @@ class IotDevice(BaseWeChatAPI):
         :return:
         """
         data = {"ilink_im_sdk_id": ilink_im_sdk_id}
-        result = self._post("mmiot/reset_public_device", json=data)
+        result = await self._post("mmiot/reset_public_device", json=data)
         return result
 
-    def get_device_qrcode(self, ilink_im_sdk_id, ticket_scene=0):
+    async def get_device_qrcode(self, ilink_im_sdk_id, ticket_scene=0):
         """
         重置设备
         https://iot.weixin.qq.com/doc?page=3-5
@@ -53,5 +53,5 @@ class IotDevice(BaseWeChatAPI):
         :return:
         """
         data = {"ilink_im_sdk_id": ilink_im_sdk_id, "payload": {"ticket_scene": ticket_scene}}
-        result = self._post("mmiot/get_device_qrcode", json=data)
+        result = await self._post("mmiot/get_device_qrcode", json=data)
         return result
