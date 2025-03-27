@@ -54,7 +54,7 @@ class WeChatExternalContact(BaseWeChatAPI):
             **权限说明：**
 
             - 需要使用 `客户联系secret`_ 或配置到 `可调用应用`_ 列表中的自建应用secret
-              来初始化 :py:class:`wechatpy.work.client.WeChatClient` 类。
+              来初始化 :py:class:`aiowechatpy.work.client.WeChatClient` 类。
             - 第三方应用需拥有“企业客户”权限。
             - 第三方/自建应用只能获取到可见范围内的配置了客户联系功能的成员。
 
@@ -90,7 +90,7 @@ class WeChatExternalContact(BaseWeChatAPI):
             **权限说明：**
 
             - 需要使用 `客户联系secret`_ 或配置到 `可调用应用`_ 列表中的自建应用secret
-              来初始化 :py:class:`wechatpy.work.client.WeChatClient` 类。
+              来初始化 :py:class:`aiowechatpy.work.client.WeChatClient` 类。
             - 第三方应用需拥有“企业客户”权限。
             - 第三方/自建应用只能获取到可见范围内的配置了客户联系功能的成员。
 
@@ -106,7 +106,7 @@ class WeChatExternalContact(BaseWeChatAPI):
 
         .. code-block:: python
 
-            from wechatpy.work import WeChatClient
+            from aiowechatpy.work import WeChatClient
 
             # 需要注意使用正确的secret，否则会导致在之后的接口调用中失败
             client = WeChatClient("corp_id", "secret_key")
@@ -122,7 +122,7 @@ class WeChatExternalContact(BaseWeChatAPI):
             **权限说明：**
 
             - 需要使用 `客户联系secret`_ 或配置到 `可调用应用`_ 列表中的自建应用secret
-              来初始化 :py:class:`wechatpy.work.client.WeChatClient` 类。
+              来初始化 :py:class:`aiowechatpy.work.client.WeChatClient` 类。
             - 第三方应用需具有“企业客户权限->客户基础信息”权限
             - 第三方/自建应用调用此接口时，userid需要在相关应用的可见范围内。
 
@@ -141,7 +141,7 @@ class WeChatExternalContact(BaseWeChatAPI):
 
         .. code-block:: python
 
-            from wechatpy.work import WeChatClient
+            from aiowechatpy.work import WeChatClient
 
             # 需要注意使用正确的secret，否则会导致在之后的接口调用中失败
             client = WeChatClient("corp_id", "secret_key")
@@ -157,7 +157,7 @@ class WeChatExternalContact(BaseWeChatAPI):
             **权限说明：**
 
             - 需要使用 `客户联系secret`_ 或配置到 `可调用应用`_ 列表中的自建应用secret
-              来初始化 :py:class:`wechatpy.work.client.WeChatClient` 类。
+              来初始化 :py:class:`aiowechatpy.work.client.WeChatClient` 类。
             - 第三方应用需具有“企业客户权限->客户基础信息”权限
             - 第三方/自建应用调用此接口时，userid需要在相关应用的可见范围内。
         """
@@ -183,7 +183,7 @@ class WeChatExternalContact(BaseWeChatAPI):
 
         .. code-block:: python
 
-            from wechatpy.work import WeChatClient
+            from aiowechatpy.work import WeChatClient
 
             # 需要注意使用正确的secret，否则会导致在之后的接口调用中失败
             client = WeChatClient("corp_id", "secret_key")
@@ -201,7 +201,7 @@ class WeChatExternalContact(BaseWeChatAPI):
             **权限说明：**
 
             - 需要使用 `客户联系secret`_ 或配置到 `可调用应用`_ 列表中的自建应用secret
-              来初始化 :py:class:`wechatpy.work.client.WeChatClient` 类。
+              来初始化 :py:class:`aiowechatpy.work.client.WeChatClient` 类。
             - 第三方/自建应用调用时，返回的跟进人follow_user仅包含应用可见范围之内的成员。
 
         .. _外部联系人的userid（如何获取?）: https://work.weixin.qq.com/api/doc/9
@@ -244,7 +244,7 @@ class WeChatExternalContact(BaseWeChatAPI):
 
         .. code-block:: python
 
-            from wechatpy.work import WeChatClient
+            from aiowechatpy.work import WeChatClient
 
             # 需要注意使用正确的secret，否则会导致在之后的接口调用中失败
             client = WeChatClient("corp_id", "secret_key")
@@ -308,7 +308,7 @@ class WeChatExternalContact(BaseWeChatAPI):
             **调用接口应满足如下的权限要求：**
 
             - 需要使用 `客户联系secret`_ 或配置到 `可调用应用`_ 列表中的自建应用secret
-              来初始化 :py:class:`wechatpy.work.client.WeChatClient` 类。
+              来初始化 :py:class:`aiowechatpy.work.client.WeChatClient` 类。
             - 使用人员需要配置了 `客户联系功能`_。
             - 第三方调用时，应用需具有 `企业客户权限`_。
             - 第三方/自建应用调用时，传入的userid和partyid需要在此应用的可见范围内。
@@ -356,7 +356,7 @@ class WeChatExternalContact(BaseWeChatAPI):
             **调用接口应满足如下的权限要求：**
 
             - 需要使用 `客户联系secret`_ 或配置到 `可调用应用`_ 列表中的自建应用secret
-              来初始化 :py:class:`wechatpy.work.client.WeChatClient` 类。
+              来初始化 :py:class:`aiowechatpy.work.client.WeChatClient` 类。
             - 使用人员需要配置了 `客户联系功能`_。
             - 第三方调用时，应用需具有 `企业客户权限`_。
             - 第三方/自建应用调用时，传入的userid和partyid需要在此应用的可见范围内。
@@ -404,7 +404,7 @@ class WeChatExternalContact(BaseWeChatAPI):
             **调用接口应满足如下的权限要求：**
 
             - 需要使用 `客户联系secret`_ 或配置到 `可调用应用`_ 列表中的自建应用secret
-              来初始化 :py:class:`wechatpy.work.client.WeChatClient` 类。
+              来初始化 :py:class:`aiowechatpy.work.client.WeChatClient` 类。
             - 使用人员需要配置了 `客户联系功能`_。
             - 第三方调用时，应用需具有 `企业客户权限`_。
             - 第三方/自建应用调用时，传入的userid和partyid需要在此应用的可见范围内。
@@ -444,7 +444,7 @@ class WeChatExternalContact(BaseWeChatAPI):
             **调用接口应满足如下的权限要求：**
 
             - 需要使用 `客户联系secret`_ 或配置到 `可调用应用`_ 列表中的自建应用secret
-              来初始化 :py:class:`wechatpy.work.client.WeChatClient` 类。
+              来初始化 :py:class:`aiowechatpy.work.client.WeChatClient` 类。
             - 使用人员需要配置了 `客户联系功能`_。
             - 第三方调用时，应用需具有 `企业客户权限`_。
             - 第三方/自建应用调用时，传入的userid和partyid需要在此应用的可见范围内。
@@ -480,8 +480,8 @@ class WeChatExternalContact(BaseWeChatAPI):
 
         .. code-block:: python
 
-            from wechatpy.exceptions import WeChatClientException
-            from wechatpy.work import WeChatClient
+            from aiowechatpy.exceptions import WeChatClientException
+            from aiowechatpy.work import WeChatClient
 
             # 需要注意使用正确的secret，否则会导致在之后的接口调用中失败
             client = WeChatClient("corp_id", "secret_key")
@@ -580,7 +580,7 @@ class WeChatExternalContact(BaseWeChatAPI):
             **权限说明：**
 
             - 需要使用 `客户联系secret`_ 或配置到 `可调用应用`_ 列表中的自建应用secret
-              来初始化 :py:class:`wechatpy.work.client.WeChatClient` 类。
+              来初始化 :py:class:`aiowechatpy.work.client.WeChatClient` 类。
             - 第三方应用使用，需具有“企业客户权限->客户联系->获取成员联系客户的数据统计”权限。
             - 第三方/自建应用调用时传入的userid和partyid要在应用的可见范围内;
 
@@ -612,8 +612,8 @@ class WeChatExternalContact(BaseWeChatAPI):
 
         .. code-block:: python
 
-            from wechatpy.exceptions import WeChatClientException
-            from wechatpy.work import WeChatClient
+            from aiowechatpy.exceptions import WeChatClientException
+            from aiowechatpy.work import WeChatClient
 
             # 需要注意使用正确的secret，否则会导致在之后的接口调用中失败
             client = WeChatClient("corp_id", "secret_key")
@@ -663,7 +663,7 @@ class WeChatExternalContact(BaseWeChatAPI):
             **权限说明：**
 
             - 需要使用 `客户联系secret`_ 或配置到 `可调用应用`_ 列表中的自建应用secret
-              来初始化 :py:class:`wechatpy.work.client.WeChatClient` 类。
+              来初始化 :py:class:`aiowechatpy.work.client.WeChatClient` 类。
             - 第三方应用需要拥有「企业客户」权限，且企业成员处于相关应用的可见范围内。
         """
         return self._post("externalcontact/send_welcome_msg", data=template)
@@ -691,7 +691,7 @@ class WeChatExternalContact(BaseWeChatAPI):
             **权限说明：**
 
             - 需要使用 `客户联系secret`_ 或配置到 `可调用应用`_ 列表中的自建应用secret
-              来初始化 :py:class:`wechatpy.work.client.WeChatClient` 类。
+              来初始化 :py:class:`aiowechatpy.work.client.WeChatClient` 类。
             - 第三方应用需拥有“企业客户权限->客户联系->分配在职或离职成员的客户”权限
 
         .. _获取离职成员列表: https://work.weixin.qq.com/api/doc/90000/90135/92124
@@ -727,8 +727,8 @@ class WeChatExternalContact(BaseWeChatAPI):
 
         .. code-block:: python
 
-            from wechatpy.exceptions import WeChatClientException
-            from wechatpy.work import WeChatClient
+            from aiowechatpy.exceptions import WeChatClientException
+            from aiowechatpy.work import WeChatClient
 
             # 需要注意使用正确的secret，否则会导致在之后的接口调用中失败
             client = WeChatClient("corp_id", "secret_key")
@@ -754,7 +754,7 @@ class WeChatExternalContact(BaseWeChatAPI):
             **权限说明：**
 
             - 需要使用 `客户联系secret`_ 或配置到 `可调用应用`_ 列表中的自建应用secret
-              来初始化 :py:class:`wechatpy.work.client.WeChatClient` 类。
+              来初始化 :py:class:`aiowechatpy.work.client.WeChatClient` 类。
             - 第三方应用需拥有 `企业客户权限`_。
             - 接替成员必须在此第三方应用或自建应用的可见范围内。
             - 接替成员需要配置了 `客户联系功能`_。
@@ -790,7 +790,7 @@ class WeChatExternalContact(BaseWeChatAPI):
 
         .. code-block:: python
 
-            from wechatpy.work import WeChatClient
+            from aiowechatpy.work import WeChatClient
 
             # 需要注意使用正确的secret，否则会导致在之后的接口调用中失败
             client = WeChatClient("corp_id", "secret_key")
@@ -807,7 +807,7 @@ class WeChatExternalContact(BaseWeChatAPI):
             **权限说明：**
 
             - 需要使用 `客户联系secret`_ 或配置到 `可调用应用`_ 列表中的自建应用secret
-              来初始化 :py:class:`wechatpy.work.client.WeChatClient` 类。
+              来初始化 :py:class:`aiowechatpy.work.client.WeChatClient` 类。
             - 对于添加/删除/编辑企业客户标签接口，目前仅支持使用 `客户联系secret`_ 所获
               取的accesstoken来调用。
             - 第三方仅可读取，且应用需具有 `企业客户权限`_。
@@ -849,7 +849,7 @@ class WeChatExternalContact(BaseWeChatAPI):
 
         .. code-block:: python
 
-            from wechatpy.work import WeChatClient
+            from aiowechatpy.work import WeChatClient
 
             # 需要注意使用正确的secret，否则会导致在之后的接口调用中失败
             client = WeChatClient("corp_id", "secret_key")
@@ -882,7 +882,7 @@ class WeChatExternalContact(BaseWeChatAPI):
             **权限说明：**
 
             - 需要使用 `客户联系secret`_ 或配置到 `可调用应用`_ 列表中的自建应用secret
-              来初始化 :py:class:`wechatpy.work.client.WeChatClient` 类。
+              来初始化 :py:class:`aiowechatpy.work.client.WeChatClient` 类。
             - 对于添加/删除/编辑企业客户标签接口，目前仅支持使用 `客户联系secret`_ 所获
               取的accesstoken来调用。
             - 第三方仅可读取，且应用需具有 `企业客户权限`_。
@@ -907,8 +907,8 @@ class WeChatExternalContact(BaseWeChatAPI):
 
         .. code-block:: python
 
-            from wechatpy.exceptions import WeChatClientException
-            from wechatpy.work import WeChatClient
+            from aiowechatpy.exceptions import WeChatClientException
+            from aiowechatpy.work import WeChatClient
 
             # 需要注意使用正确的secret，否则会导致在之后的接口调用中失败
             client = WeChatClient("corp_id", "secret_key")
@@ -932,7 +932,7 @@ class WeChatExternalContact(BaseWeChatAPI):
             **权限说明：**
 
             - 需要使用 `客户联系secret`_ 或配置到 `可调用应用`_ 列表中的自建应用secret
-              来初始化 :py:class:`wechatpy.work.client.WeChatClient` 类。
+              来初始化 :py:class:`aiowechatpy.work.client.WeChatClient` 类。
             - 对于添加/删除/编辑企业客户标签接口，目前仅支持使用 `客户联系secret`_ 所获
               取的accesstoken来调用。
             - 第三方仅可读取，且应用需具有 `企业客户权限`_。
@@ -959,8 +959,8 @@ class WeChatExternalContact(BaseWeChatAPI):
 
         .. code-block:: python
 
-            from wechatpy.exceptions import WeChatClientException
-            from wechatpy.work import WeChatClient
+            from aiowechatpy.exceptions import WeChatClientException
+            from aiowechatpy.work import WeChatClient
 
             # 需要注意使用正确的secret，否则会导致在之后的接口调用中失败
             client = WeChatClient("corp_id", "secret_key")
@@ -982,7 +982,7 @@ class WeChatExternalContact(BaseWeChatAPI):
             **权限说明：**
 
             - 需要使用 `客户联系secret`_ 或配置到 `可调用应用`_ 列表中的自建应用secret
-              来初始化 :py:class:`wechatpy.work.client.WeChatClient` 类。
+              来初始化 :py:class:`aiowechatpy.work.client.WeChatClient` 类。
             - 对于添加/删除/编辑企业客户标签接口，目前仅支持使用 `客户联系secret`_ 所获
               取的accesstoken来调用。
             - 第三方仅可读取，且应用需具有 `企业客户权限`_。
@@ -1016,8 +1016,8 @@ class WeChatExternalContact(BaseWeChatAPI):
 
         .. code-block:: python
 
-            from wechatpy.exceptions import WeChatClientException
-            from wechatpy.work import WeChatClient
+            from aiowechatpy.exceptions import WeChatClientException
+            from aiowechatpy.work import WeChatClient
 
             # 需要注意使用正确的secret，否则会导致在之后的接口调用中失败
             client = WeChatClient("corp_id", "secret_key")
@@ -1046,7 +1046,7 @@ class WeChatExternalContact(BaseWeChatAPI):
             **权限说明：**
 
             - 需要使用 `客户联系secret`_ 或配置到 `可调用应用`_ 列表中的自建应用secret
-              来初始化 :py:class:`wechatpy.work.client.WeChatClient` 类。
+              来初始化 :py:class:`aiowechatpy.work.client.WeChatClient` 类。
             - 第三方调用时，应用需具有外部联系人管理权限。
         """
         add_tag = add_tag or []
@@ -1093,7 +1093,7 @@ class WeChatExternalContact(BaseWeChatAPI):
             **权限说明：**
 
             - 需要使用 `客户联系secret`_ 或配置到 `可调用应用`_ 列表中的自建应用secret
-              来初始化 :py:class:`wechatpy.work.client.WeChatClient` 类。
+              来初始化 :py:class:`aiowechatpy.work.client.WeChatClient` 类。
             - 第三方应用需具有“企业客户权限->客户基础信息”权限
             - 对于第三方/自建应用，群主必须在应用的可见范围。
 
@@ -1121,7 +1121,7 @@ class WeChatExternalContact(BaseWeChatAPI):
             **权限说明：**
 
             - 需要使用 `客户联系secret`_ 或配置到 `可调用应用`_ 列表中的自建应用secret
-              来初始化 :py:class:`wechatpy.work.client.WeChatClient` 类。
+              来初始化 :py:class:`aiowechatpy.work.client.WeChatClient` 类。
             - 第三方应用需具有“企业客户权限->客户基础信息”权限
             - 对于第三方/自建应用，群主必须在应用的可见范围。
 
@@ -1147,7 +1147,7 @@ class WeChatExternalContact(BaseWeChatAPI):
             **权限说明：**
 
             - 需要使用 `客户联系secret`_ 或配置到 `可调用应用`_ 列表中的自建应用secret
-              来初始化 :py:class:`wechatpy.work.client.WeChatClient` 类。
+              来初始化 :py:class:`aiowechatpy.work.client.WeChatClient` 类。
             - 第三方应用需具有“企业客户权限->客户联系->配置入群欢迎语素材”权限
 
         .. _添加群欢迎语素材: https://work.weixin.qq.com/api/doc/90000/90135/
@@ -1178,7 +1178,7 @@ class WeChatExternalContact(BaseWeChatAPI):
             **权限说明：**
 
             - 需要使用 `客户联系secret`_ 或配置到 `可调用应用`_ 列表中的自建应用secret
-              来初始化 :py:class:`wechatpy.work.client.WeChatClient` 类。
+              来初始化 :py:class:`aiowechatpy.work.client.WeChatClient` 类。
             - 第三方应用需具有“企业客户权限->客户联系->配置入群欢迎语素材”权限
             - 仅可编辑本应用创建的入群欢迎语素材
 
@@ -1207,7 +1207,7 @@ class WeChatExternalContact(BaseWeChatAPI):
             **权限说明：**
 
             - 需要使用 `客户联系secret`_ 或配置到 `可调用应用`_ 列表中的自建应用secret
-              来初始化 :py:class:`wechatpy.work.client.WeChatClient` 类。
+              来初始化 :py:class:`aiowechatpy.work.client.WeChatClient` 类。
             - 第三方应用需具有“企业客户权限->客户联系->配置入群欢迎语素材”权限
 
         .. _获取入群欢迎语素材: https://work.weixin.qq.com/api/doc/90000/90135/
@@ -1233,7 +1233,7 @@ class WeChatExternalContact(BaseWeChatAPI):
             **权限说明：**
 
             - 需要使用 `客户联系secret`_ 或配置到 `可调用应用`_ 列表中的自建应用secret
-              来初始化 :py:class:`wechatpy.work.client.WeChatClient` 类。
+              来初始化 :py:class:`aiowechatpy.work.client.WeChatClient` 类。
             - 第三方应用需具有“企业客户权限->客户联系->配置入群欢迎语素材”权限
             - 仅可删除本应用创建的入群欢迎语素材
 

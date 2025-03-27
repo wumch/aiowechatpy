@@ -6,7 +6,7 @@ from datetime import datetime
 
 class MessagesTestCase(unittest.TestCase):
     def test_base_message(self):
-        from wechatpy.messages import TextMessage
+        from aiowechatpy.messages import TextMessage
 
         timestamp = int(time.time())
         msg = TextMessage(
@@ -25,7 +25,7 @@ class MessagesTestCase(unittest.TestCase):
         self.assertTrue(isinstance(msg.create_time, datetime))
 
     def test_text_message(self):
-        from wechatpy.messages import TextMessage
+        from aiowechatpy.messages import TextMessage
 
         msg = TextMessage(
             {
@@ -36,7 +36,7 @@ class MessagesTestCase(unittest.TestCase):
         self.assertEqual("test", msg.content)
 
     def test_image_message(self):
-        from wechatpy.messages import ImageMessage
+        from aiowechatpy.messages import ImageMessage
 
         msg = ImageMessage(
             {
@@ -47,7 +47,7 @@ class MessagesTestCase(unittest.TestCase):
         self.assertEqual("http://www.qq.com/1.png", msg.image)
 
     def test_voice_message(self):
-        from wechatpy.messages import VoiceMessage
+        from aiowechatpy.messages import VoiceMessage
 
         msg = VoiceMessage(
             {
@@ -62,7 +62,7 @@ class MessagesTestCase(unittest.TestCase):
         self.assertEqual("test", msg.recognition)
 
     def test_video_message(self):
-        from wechatpy.messages import VideoMessage
+        from aiowechatpy.messages import VideoMessage
 
         msg = VideoMessage(
             {
@@ -75,7 +75,7 @@ class MessagesTestCase(unittest.TestCase):
         self.assertEqual("123456", msg.thumb_media_id)
 
     def test_location_message(self):
-        from wechatpy.messages import LocationMessage
+        from aiowechatpy.messages import LocationMessage
 
         msg = LocationMessage(
             {
@@ -92,7 +92,7 @@ class MessagesTestCase(unittest.TestCase):
         self.assertEqual("test", msg.label)
 
     def test_link_message(self):
-        from wechatpy.messages import LinkMessage
+        from aiowechatpy.messages import LinkMessage
 
         msg = LinkMessage(
             {
@@ -107,7 +107,7 @@ class MessagesTestCase(unittest.TestCase):
         self.assertEqual("http://www.qq.com", msg.url)
 
     def test_miniprogrampage_message(self):
-        from wechatpy.messages import MiniProgramPageMessage
+        from aiowechatpy.messages import MiniProgramPageMessage
 
         msg = MiniProgramPageMessage(
             {

@@ -6,7 +6,7 @@ import unittest
 import pytest
 from httmock import urlmatch, response, HTTMock
 
-from wechatpy.pay.v3 import WeChatPay
+from aiowechatpy.pay.v3 import WeChatPay
 
 _TESTS_PATH = os.path.abspath(os.path.dirname(__file__))
 _CERTS_PATH = os.path.join(_TESTS_PATH, "certs")
@@ -43,7 +43,7 @@ class WeChatPayTestCase(unittest.TestCase):
         )
 
     def test_calculate_signature(self):
-        from wechatpy.pay.utils import calculate_signature_rsa
+        from aiowechatpy.pay.utils import calculate_signature_rsa
 
         with open(self.client.apiclient_key_path, "rb") as public_fp:
             apiclient_key = public_fp.read()

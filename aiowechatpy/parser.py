@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-    wechatpy.parser
+    aiowechatpy.parser
     ~~~~~~~~~~~~~~~~
     This module provides functions for parsing WeChat messages
 

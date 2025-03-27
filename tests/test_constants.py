@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from wechatpy.constants import WeChatErrorCode
+from aiowechatpy.constants import WeChatErrorCode
 
 
 class WeChatErrorCodeTestCase(unittest.TestCase):

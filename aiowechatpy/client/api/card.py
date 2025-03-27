@@ -686,7 +686,7 @@ class WeChatCard(BaseWeChatAPI):
                 ]
             }
         }
-        common_field_id_list 值见常量 `wechatpy.constants.UserFormInfoFlag`
+        common_field_id_list 值见常量 `aiowechatpy.constants.UserFormInfoFlag`
 
         :param card_id: 卡券ID
         :param kwargs: 其他非必填参数，见微信文档

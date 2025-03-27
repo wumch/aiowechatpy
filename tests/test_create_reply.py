@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from wechatpy.replies import TextReply, create_reply
+from aiowechatpy.replies import TextReply, create_reply
 
 
 class CreateReplyTestCase(unittest.TestCase):
@@ -18,7 +18,7 @@ class CreateReplyTestCase(unittest.TestCase):
         self.assertTrue(isinstance(reply, str))
 
     def test_create_reply_with_message(self):
-        from wechatpy.messages import TextMessage
+        from aiowechatpy.messages import TextMessage
 
         msg = TextMessage(
             {
@@ -136,7 +136,7 @@ class CreateReplyTestCase(unittest.TestCase):
         self.assertRaises(AttributeError, create_reply, articles)
 
     def test_create_empty_reply(self):
-        from wechatpy.replies import EmptyReply
+        from aiowechatpy.replies import EmptyReply
 
         reply = create_reply("")
         self.assertTrue(isinstance(reply, EmptyReply))

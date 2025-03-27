@@ -2,11 +2,11 @@
 import os
 
 from flask import Flask, request, abort, render_template
-from wechatpy.crypto import WeChatCrypto
-from wechatpy import parse_message, create_reply
-from wechatpy.utils import check_signature
-from wechatpy.exceptions import InvalidSignatureException
-from wechatpy.exceptions import InvalidAppIdException
+from aiowechatpy.crypto import WeChatCrypto
+from aiowechatpy import parse_message, create_reply
+from aiowechatpy.utils import check_signature
+from aiowechatpy.exceptions import InvalidSignatureException
+from aiowechatpy.exceptions import InvalidAppIdException
 
 # set token or get from environments
 TOKEN = os.getenv("WECHAT_TOKEN", "123456")

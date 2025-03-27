@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from wechatpy.pay.utils import filter_none_values
-from wechatpy.pay.v3.api.base import BaseWeChatPayAPI
+from aiowechatpy.pay.utils import filter_none_values
+from aiowechatpy.pay.v3.api.base import BaseWeChatPayAPI
 
 
 class WeChatEcommerce(BaseWeChatPayAPI):

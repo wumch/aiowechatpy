@@ -8,17 +8,17 @@ import xmltodict
 from xml.parsers.expat import ExpatError
 from optionaldict import optionaldict
 
-from wechatpy.crypto import WeChatRefundCrypto
-from wechatpy.utils import random_string
-from wechatpy.exceptions import WeChatPayException, InvalidSignatureException
-from wechatpy.pay.utils import (
+from aiowechatpy.crypto import WeChatRefundCrypto
+from aiowechatpy.utils import random_string
+from aiowechatpy.exceptions import WeChatPayException, InvalidSignatureException
+from aiowechatpy.pay.utils import (
     calculate_signature,
     calculate_signature_hmac,
     _check_signature,
     dict_to_xml,
 )
-from wechatpy.pay.api.base import BaseWeChatPayAPI
-from wechatpy.pay import api
+from aiowechatpy.pay.api.base import BaseWeChatPayAPI
+from aiowechatpy.pay import api
 
 logger = logging.getLogger(__name__)
 
@@ -217,7 +217,7 @@ class WeChatPay:
 
         使用示例::
 
-            from wechatpy.pay import WeChatPay
+            from aiowechatpy.pay import WeChatPay
             # 假设你已经获取了微信服务器推送的请求中的xml数据并存入xml变量
             data = WeChatPay.get_payment_appid(xml)
             {

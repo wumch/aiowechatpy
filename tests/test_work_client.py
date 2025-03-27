@@ -6,8 +6,8 @@ import unittest
 
 from httmock import HTTMock, response, urlmatch
 
-from wechatpy.exceptions import WeChatClientException
-from wechatpy.work import WeChatClient
+from aiowechatpy.exceptions import WeChatClientException
+from aiowechatpy.work import WeChatClient
 
 _TESTS_PATH = os.path.abspath(os.path.dirname(__file__))
 _FIXTURE_PATH = os.path.join(_TESTS_PATH, "fixtures", "work")

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-    wechatpy.messages
+    aiowechatpy.messages
     ~~~~~~~~~~~~~~~~~~
 
     This module defines all the messages you can get from WeChat server

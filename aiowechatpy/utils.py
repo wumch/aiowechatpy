@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-    wechatpy.utils
+    aiowechatpy.utils
     ~~~~~~~~~~~~~~~
 
     This module provides some useful utilities.

@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from wechatpy import WeChatClient
-from wechatpy.client.api import WeChatMessage
+from aiowechatpy import WeChatClient
+from aiowechatpy.client.api import WeChatMessage
 
 
 class SendMessageTestCase(unittest.TestCase):

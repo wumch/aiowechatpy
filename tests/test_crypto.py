@@ -3,8 +3,8 @@ import unittest
 
 import xmltodict
 
-from wechatpy.work import crypto as _crypto
-from wechatpy.work.crypto import WeChatCrypto
+from aiowechatpy.work import crypto as _crypto
+from aiowechatpy.work.crypto import WeChatCrypto
 
 
 class PrpCryptoMock(_crypto.PrpCrypto):
@@ -28,7 +28,7 @@ class CryptoTestCase(unittest.TestCase):
         echo_str = crypto.check_signature(signature, timestamp, nonce, echo_str)
 
     def test_check_signature_should_fail(self):
-        from wechatpy.exceptions import InvalidSignatureException
+        from aiowechatpy.exceptions import InvalidSignatureException
 
         signature = "dd6b9c95b495b3f7e2901bfbc76c664930ffdb96"
         timestamp = "1411443780"
@@ -107,7 +107,7 @@ class CryptoTestCase(unittest.TestCase):
         self.assertEqual("messense", msg_dict["FromUserName"])
 
     def test_wxa_decrypt_message(self):
-        from wechatpy.crypto import WeChatWxaCrypto
+        from aiowechatpy.crypto import WeChatWxaCrypto
 
         appid = "wx4f4bc4dec97d474b"
         session_key = "tiihtNczf5v6AKRyjwEUhQ=="
@@ -127,7 +127,7 @@ class CryptoTestCase(unittest.TestCase):
         self.assertEqual(appid, decrypted["watermark"]["appid"])
 
     def test_refund_notify_decrypt_message(self):
-        from wechatpy.crypto import WeChatRefundCrypto
+        from aiowechatpy.crypto import WeChatRefundCrypto
 
         appid = "wx4f4bc4dec97d474b"
         mch_id = "12345678"

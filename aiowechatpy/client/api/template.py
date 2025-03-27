@@ -179,4 +179,4 @@ class WeChatTemplate(BaseWeChatAPI):
         """
         return self._get("wxaapi/newtmpl/gettemplate", result_processor=operator.itemgetter("data"))
 
-    # send 接口参见 wechatpy.client.api.message.WeChatMessage.send_subscribe_message
+    # send 接口参见 aiowechatpy.client.api.message.WeChatMessage.send_subscribe_message

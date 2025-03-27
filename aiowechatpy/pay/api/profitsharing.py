@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import json
-from wechatpy.pay.api.base import BaseWeChatPayAPI
+from aiowechatpy.pay.api.base import BaseWeChatPayAPI
 
 
 class WechatProfitSharing(BaseWeChatPayAPI):

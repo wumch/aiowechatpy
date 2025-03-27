@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from wechatpy import replies
+from aiowechatpy import replies
 
 
 def create_reply(cls, **kwargs):

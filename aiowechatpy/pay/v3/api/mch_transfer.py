@@ -3,7 +3,7 @@
 from typing import Optional, Final, List
 from enum import StrEnum
 from pydantic import BaseModel
-from wechatpy.pay.v3.api.base import BaseWeChatPayAPI
+from aiowechatpy.pay.v3.api.base import BaseWeChatPayAPI
 
 
 class WeChatMchTransferSceneReportInfo(BaseModel):

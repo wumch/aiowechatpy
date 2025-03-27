@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 
-from wechatpy.client.api.base import BaseWeChatAPI
+from aiowechatpy.client.api.base import BaseWeChatAPI
 
 
 class IotDevice(BaseWeChatAPI):

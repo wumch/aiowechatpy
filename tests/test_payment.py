@@ -5,8 +5,8 @@ import unittest
 
 from httmock import urlmatch, HTTMock, response
 
-from wechatpy import WeChatPay
-from wechatpy.pay import dict_to_xml
+from aiowechatpy import WeChatPay
+from aiowechatpy.pay import dict_to_xml
 
 _TESTS_PATH = os.path.abspath(os.path.dirname(__file__))
 _FIXTURE_PATH = os.path.join(_TESTS_PATH, "fixtures", "payment")

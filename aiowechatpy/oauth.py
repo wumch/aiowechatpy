@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-    wechatpy.oauth
+    aiowechatpy.oauth
     ~~~~~~~~~~~~~~~
 
     This module provides OAuth2 library for WeChat

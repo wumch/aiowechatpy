@@ -12,9 +12,9 @@ import requests
 from cryptography.hazmat.backends import default_backend
 from cryptography.x509 import load_pem_x509_certificate
 
-from wechatpy.exceptions import InvalidSignatureException, WeChatPayV3Exception
-from wechatpy.pay.v3.api.base import BaseWeChatPayAPI
-from wechatpy.pay.utils import (
+from aiowechatpy.exceptions import InvalidSignatureException, WeChatPayV3Exception
+from aiowechatpy.pay.v3.api.base import BaseWeChatPayAPI
+from aiowechatpy.pay.utils import (
     calculate_signature_rsa,
     check_rsa_signature,
     aes_decrypt,
@@ -22,8 +22,8 @@ from wechatpy.pay.utils import (
     calculate_pay_params_signature_rsa,
     get_serial_no,
 )
-from wechatpy.utils import random_string, to_text
-from wechatpy.pay.v3 import api
+from aiowechatpy.utils import random_string, to_text
+from aiowechatpy.pay.v3 import api
 
 logger = logging.getLogger(__name__)
 

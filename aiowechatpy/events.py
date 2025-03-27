@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-    wechatpy.events
+    aiowechatpy.events
     ~~~~~~~~~~~~~~~~
 
     This module contains all the events WeChat callback uses.

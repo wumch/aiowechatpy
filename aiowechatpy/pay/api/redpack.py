@@ -4,7 +4,7 @@ import random
 from datetime import datetime
 
 from aiowechatpy.pay.utils import get_external_ip
-from wechatpy.pay.api.base import BaseWeChatPayAPI
+from aiowechatpy.pay.api.base import BaseWeChatPayAPI
 
 
 class WeChatRedpack(BaseWeChatPayAPI):

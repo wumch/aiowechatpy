@@ -3,9 +3,9 @@ import time
 import random
 from datetime import datetime, timedelta
 
-from wechatpy.utils import timezone
-from wechatpy.pay.v3.api.base import BaseWeChatPayAPI
-from wechatpy.utils import random_string, to_text
+from aiowechatpy.utils import timezone
+from aiowechatpy.pay.v3.api.base import BaseWeChatPayAPI
+from aiowechatpy.utils import random_string, to_text
 
 
 class WeChatPartnerOrder(BaseWeChatPayAPI):

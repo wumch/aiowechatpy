@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
 
-from wechatpy.client.base import BaseWeChatClient
-from wechatpy.iot.client import api
+from aiowechatpy.client.base import BaseWeChatClient
+from aiowechatpy.iot.client import api
 
 
 class IotClient(BaseWeChatClient):

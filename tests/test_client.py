@@ -9,9 +9,9 @@ from datetime import datetime
 
 from httmock import HTTMock, response, urlmatch
 
-from wechatpy import WeChatClient
-from wechatpy.exceptions import WeChatClientException
-from wechatpy.schemes import JsApiCardExt
+from aiowechatpy import WeChatClient
+from aiowechatpy.exceptions import WeChatClientException
+from aiowechatpy.schemes import JsApiCardExt
 
 _TESTS_PATH = os.path.abspath(os.path.dirname(__file__))
 _FIXTURE_PATH = os.path.join(_TESTS_PATH, "fixtures")
@@ -846,7 +846,7 @@ class WeChatClientTestCase(unittest.TestCase):
 
     def test_client_expires_at_consistency(self):
         from redis.asyncio import Redis
-        from wechatpy.session.redisstorage import RedisStorage
+        from aiowechatpy.session.redisstorage import RedisStorage
 
         redis = Redis()
         session = RedisStorage(redis)

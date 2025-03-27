@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-    wechatpy.replies
+    aiowechatpy.replies
     ~~~~~~~~~~~~~~~~~~
     This module defines all kinds of replies you can send to WeChat
 
@@ -343,7 +343,7 @@ def deserialize_reply(xml, update_time=False):
     :param xml: 待反序列化的xml
     :param update_time: 是否用当前时间替换xml中的时间
     :raises ValueError: 不能辨识的reply xml
-    :rtype: wechatpy.replies.BaseReply
+    :rtype: aiowechatpy.replies.BaseReply
     """
     if not xml:
         return EmptyReply()

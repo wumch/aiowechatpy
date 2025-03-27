@@ -562,7 +562,7 @@ class WeChatMessage(BaseWeChatAPI):
 
         使用示例::
 
-            from wechatpy import WeChatClient
+            from aiowechatpy import WeChatClient
 
             client = WeChatClient('appid', 'secret')
             res = client.message.get_mass('mass message id')
@@ -604,7 +604,7 @@ class WeChatMessage(BaseWeChatAPI):
 
         使用示例::
 
-            from wechatpy import WeChatClient
+            from aiowechatpy import WeChatClient
 
             client = WeChatClient('appid', 'secret')
             info = client.message.get_autoreply_info()

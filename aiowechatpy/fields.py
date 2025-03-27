@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-    wechatpy.fields
+    aiowechatpy.fields
     ~~~~~~~~~~~~~~~~
 
     This module defines some useful field types for parse WeChat messages

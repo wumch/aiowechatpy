@@ -2,7 +2,7 @@
 import time
 import unittest
 
-from wechatpy.replies import TextReply
+from aiowechatpy.replies import TextReply
 
 
 class ReplyTestCase(unittest.TestCase):
@@ -28,7 +28,7 @@ class ReplyTestCase(unittest.TestCase):
         self.assertTrue(create_time in r)
 
     def test_image_reply_properties(self):
-        from wechatpy.replies import ImageReply
+        from aiowechatpy.replies import ImageReply
 
         reply = ImageReply(image="7890")
 
@@ -40,7 +40,7 @@ class ReplyTestCase(unittest.TestCase):
         self.assertEqual("123456", reply.media_id)
 
     def test_voice_reply_properties(self):
-        from wechatpy.replies import VoiceReply
+        from aiowechatpy.replies import VoiceReply
 
         reply = VoiceReply(voice="7890")
 
@@ -52,7 +52,7 @@ class ReplyTestCase(unittest.TestCase):
         self.assertEqual("123456", reply.media_id)
 
     def test_video_reply_properties(self):
-        from wechatpy.replies import VideoReply
+        from aiowechatpy.replies import VideoReply
 
         reply = VideoReply()
         reply.media_id = "123456"
@@ -65,7 +65,7 @@ class ReplyTestCase(unittest.TestCase):
         self.assertEqual("test", reply.title)
 
     def test_music_reply_properties(self):
-        from wechatpy.replies import MusicReply
+        from aiowechatpy.replies import MusicReply
 
         reply = MusicReply()
         reply.thumb_media_id = "123456"
@@ -93,7 +93,7 @@ class ReplyTestCase(unittest.TestCase):
         self.assertTrue(reply.hq_music_url is None)
 
     def test_multi_article_reply(self):
-        from wechatpy.replies import ArticlesReply
+        from aiowechatpy.replies import ArticlesReply
 
         article = {"title": "test", "url": "http://www.qq.com"}
 
@@ -103,7 +103,7 @@ class ReplyTestCase(unittest.TestCase):
         self.assertTrue(r1.render() != r2.render())
 
     def test_empty_reply(self):
-        from wechatpy.replies import EmptyReply
+        from aiowechatpy.replies import EmptyReply
 
         reply = EmptyReply()
         self.assertEqual("", reply.render())

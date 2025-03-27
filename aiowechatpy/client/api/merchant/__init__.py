@@ -3,12 +3,12 @@
 from aiowechatpy.client.api.base import BaseWeChatAPI
 
 from aiowechatpy.client.api.merchant.category import MerchantCategory
-from wechatpy.client.api.merchant.stock import MerchantStock
-from wechatpy.client.api.merchant.express import MerchantExpress
-from wechatpy.client.api.merchant.group import MerchantGroup
-from wechatpy.client.api.merchant.shelf import MerchantShelf
-from wechatpy.client.api.merchant.order import MerchantOrder
-from wechatpy.client.api.merchant.common import MerchantCommon
+from aiowechatpy.client.api.merchant.stock import MerchantStock
+from aiowechatpy.client.api.merchant.express import MerchantExpress
+from aiowechatpy.client.api.merchant.group import MerchantGroup
+from aiowechatpy.client.api.merchant.shelf import MerchantShelf
+from aiowechatpy.client.api.merchant.order import MerchantOrder
+from aiowechatpy.client.api.merchant.common import MerchantCommon
 
 
 class WeChatMerchant(BaseWeChatAPI):

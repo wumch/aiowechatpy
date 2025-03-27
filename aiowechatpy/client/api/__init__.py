@@ -21,10 +21,10 @@ from aiowechatpy.client.api.misc import WeChatMisc  # NOQA
 from aiowechatpy.client.api.poi import WeChatPoi  # NOQA
 from aiowechatpy.client.api.qrcode import WeChatQRCode  # NOQA
 from aiowechatpy.client.api.scan import WeChatScan  # NOQA
-from wechatpy.client.api.semantic import WeChatSemantic  # NOQA
-from wechatpy.client.api.shakearound import WeChatShakeAround  # NOQA
-from wechatpy.client.api.tag import WeChatTag  # NOQA
-from wechatpy.client.api.template import WeChatTemplate  # NOQA
-from wechatpy.client.api.user import WeChatUser  # NOQA
-from wechatpy.client.api.wifi import WeChatWiFi  # NOQA
-from wechatpy.client.api.wxa import WeChatWxa  # NOQA
+from aiowechatpy.client.api.semantic import WeChatSemantic  # NOQA
+from aiowechatpy.client.api.shakearound import WeChatShakeAround  # NOQA
+from aiowechatpy.client.api.tag import WeChatTag  # NOQA
+from aiowechatpy.client.api.template import WeChatTemplate  # NOQA
+from aiowechatpy.client.api.user import WeChatUser  # NOQA
+from aiowechatpy.client.api.wifi import WeChatWiFi  # NOQA
+from aiowechatpy.client.api.wxa import WeChatWxa  # NOQA

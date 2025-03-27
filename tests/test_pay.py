@@ -4,7 +4,7 @@ import unittest
 
 class WeChatPayTestCase(unittest.TestCase):
     def test_calculate_signature(self):
-        from wechatpy.pay import calculate_signature
+        from aiowechatpy.pay import calculate_signature
 
         api_key = "192006250b4c09247ec02edce69f6a2d"
         params = {
@@ -16,7 +16,7 @@ class WeChatPayTestCase(unittest.TestCase):
         self.assertEqual(expected, sign)
 
     def test_calculate_signature_hmac(self):
-        from wechatpy.pay import calculate_signature_hmac
+        from aiowechatpy.pay import calculate_signature_hmac
 
         api_key = "192006250b4c09247ec02edce69f6a2d"
         params = {
@@ -28,7 +28,7 @@ class WeChatPayTestCase(unittest.TestCase):
         self.assertEqual(expected, sign)
 
     def test_dict_to_xml(self):
-        from wechatpy.pay import dict_to_xml
+        from aiowechatpy.pay import dict_to_xml
 
         params = {
             "test1": "test1",

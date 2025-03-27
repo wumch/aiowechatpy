@@ -2,7 +2,7 @@
 import unittest
 
 
-from wechatpy.work.replies import TextReply, create_reply
+from aiowechatpy.work.replies import TextReply, create_reply
 
 
 class CreateReplyTestCase(unittest.TestCase):
@@ -23,7 +23,7 @@ class CreateReplyTestCase(unittest.TestCase):
         self.assertTrue(reply is None)
 
     def test_create_reply_with_message(self):
-        from wechatpy.work.messages import TextMessage
+        from aiowechatpy.work.messages import TextMessage
 
         msg = TextMessage(
             {

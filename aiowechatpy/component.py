@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-    wechatpy.component
+    aiowechatpy.component
     ~~~~~~~~~~~~~~~
 
     This module provides client library for WeChat Open Platform

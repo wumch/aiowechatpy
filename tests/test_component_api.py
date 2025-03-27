@@ -6,8 +6,8 @@ import unittest
 
 from httmock import urlmatch, HTTMock, response
 
-from wechatpy.component import WeChatComponent, ComponentOAuth
-from wechatpy.exceptions import WeChatClientException
+from aiowechatpy.component import WeChatComponent, ComponentOAuth
+from aiowechatpy.exceptions import WeChatClientException
 
 
 _TESTS_PATH = os.path.abspath(os.path.dirname(__file__))

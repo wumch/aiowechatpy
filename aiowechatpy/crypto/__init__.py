@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-    wechatpy.crypto
+    aiowechatpy.crypto
     ~~~~~~~~~~~~~~~~
 
     This module provides some crypto tools for WeChat and WeChat work

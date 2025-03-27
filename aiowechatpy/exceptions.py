@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-    wechatpy.exceptions
+    aiowechatpy.exceptions
     ~~~~~~~~~~~~~~~~~~~~
 
     Basic exceptions definition.

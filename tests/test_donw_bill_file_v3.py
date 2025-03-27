@@ -4,7 +4,7 @@ import os
 import unittest
 from httmock import urlmatch, response, HTTMock
 
-from wechatpy.pay.v3 import WeChatPay
+from aiowechatpy.pay.v3 import WeChatPay
 
 _TESTS_PATH = os.path.abspath(os.path.dirname(__file__))
 _CERTS_PATH = os.path.join(_TESTS_PATH, "certs")

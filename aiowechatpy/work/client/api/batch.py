@@ -4,7 +4,7 @@
 from optionaldict import optionaldict
 
 from aiowechatpy.client.api.base import BaseWeChatAPI
-from wechatpy.utils import to_text
+from aiowechatpy.utils import to_text
 
 
 class WeChatBatch(BaseWeChatAPI):

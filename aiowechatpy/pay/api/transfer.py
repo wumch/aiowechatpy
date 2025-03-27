@@ -3,8 +3,8 @@
 import random
 from datetime import datetime
 
-from wechatpy.pay.utils import get_external_ip, rsa_encrypt
-from wechatpy.pay.api.base import BaseWeChatPayAPI
+from aiowechatpy.pay.utils import get_external_ip, rsa_encrypt
+from aiowechatpy.pay.api.base import BaseWeChatPayAPI
 
 
 class WeChatTransfer(BaseWeChatPayAPI):

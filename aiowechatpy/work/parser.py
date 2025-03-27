@@ -4,9 +4,9 @@
 import xmltodict
 
 from aiowechatpy.work.events import EVENT_TYPES
-from wechatpy.work.messages import MESSAGE_TYPES
-from wechatpy.messages import UnknownMessage
-from wechatpy.utils import to_text
+from aiowechatpy.work.messages import MESSAGE_TYPES
+from aiowechatpy.messages import UnknownMessage
+from aiowechatpy.utils import to_text
 
 
 def parse_message(xml):

@@ -6,9 +6,9 @@ from datetime import datetime
 
 from optionaldict import optionaldict
 
-from wechatpy.utils import timezone
-from wechatpy.pay.utils import get_external_ip, calculate_signature
-from wechatpy.pay.api.base import BaseWeChatPayAPI
+from aiowechatpy.utils import timezone
+from aiowechatpy.pay.utils import get_external_ip, calculate_signature
+from aiowechatpy.pay.api.base import BaseWeChatPayAPI
 
 
 class WeChatWithhold(BaseWeChatPayAPI):

@@ -2,7 +2,7 @@
 import unittest
 from datetime import datetime
 
-from wechatpy import events, parse_message
+from aiowechatpy import events, parse_message
 
 
 class EventsTestCase(unittest.TestCase):
@@ -194,7 +194,7 @@ class EventsTestCase(unittest.TestCase):
         self.assertEqual("err(30003)", event.status)
 
     def test_scan_code_push_event(self):
-        from wechatpy.events import ScanCodePushEvent
+        from aiowechatpy.events import ScanCodePushEvent
 
         xml = """<xml>
         <ToUserName><![CDATA[gh_e136c6e50636]]></ToUserName>
@@ -215,7 +215,7 @@ class EventsTestCase(unittest.TestCase):
         self.assertEqual("1", event.scan_result)
 
     def test_scan_code_waitmsg_event(self):
-        from wechatpy.events import ScanCodeWaitMsgEvent
+        from aiowechatpy.events import ScanCodeWaitMsgEvent
 
         xml = """<xml>
         <ToUserName><![CDATA[gh_e136c6e50636]]></ToUserName>
@@ -236,7 +236,7 @@ class EventsTestCase(unittest.TestCase):
         self.assertEqual("2", event.scan_result)
 
     def test_pic_sysphoto_event(self):
-        from wechatpy.events import PicSysPhotoEvent
+        from aiowechatpy.events import PicSysPhotoEvent
 
         xml = """<xml>
         <ToUserName><![CDATA[gh_e136c6e50636]]></ToUserName>
@@ -261,7 +261,7 @@ class EventsTestCase(unittest.TestCase):
         self.assertEqual("1b5f7c23b5bf75682a53e7b6d163e185", event.pictures[0]["PicMd5Sum"])
 
     def test_pic_photo_or_album_event(self):
-        from wechatpy.events import PicPhotoOrAlbumEvent
+        from aiowechatpy.events import PicPhotoOrAlbumEvent
 
         xml = """<xml>
         <ToUserName><![CDATA[gh_e136c6e50636]]></ToUserName>
@@ -286,7 +286,7 @@ class EventsTestCase(unittest.TestCase):
         self.assertEqual("5a75aaca956d97be686719218f275c6b", event.pictures[0]["PicMd5Sum"])
 
     def test_pic_wechat_event(self):
-        from wechatpy.events import PicWeChatEvent
+        from aiowechatpy.events import PicWeChatEvent
 
         xml = """<xml>
         <ToUserName><![CDATA[gh_e136c6e50636]]></ToUserName>
@@ -311,7 +311,7 @@ class EventsTestCase(unittest.TestCase):
         self.assertEqual("5a75aaca956d97be686719218f275c6b", event.pictures[0]["PicMd5Sum"])
 
     def test_location_select_event(self):
-        from wechatpy.events import LocationSelectEvent
+        from aiowechatpy.events import LocationSelectEvent
 
         xml = """<xml>
         <ToUserName><![CDATA[gh_e136c6e50636]]></ToUserName>
@@ -337,7 +337,7 @@ class EventsTestCase(unittest.TestCase):
         self.assertEqual("广州市海珠区客村艺苑路 106号", event.label)
 
     def test_merchant_order_event(self):
-        from wechatpy.events import MerchantOrderEvent
+        from aiowechatpy.events import MerchantOrderEvent
 
         xml = """<xml>
         <ToUserName><![CDATA[weixin_media1]]></ToUserName>
@@ -360,7 +360,7 @@ class EventsTestCase(unittest.TestCase):
         self.assertEqual("10001:1000012;10002:100021", event.sku_info)
 
     def test_kf_create_session_event(self):
-        from wechatpy.events import KfCreateSessionEvent
+        from aiowechatpy.events import KfCreateSessionEvent
 
         xml = """<xml>
         <ToUserName><![CDATA[touser]]></ToUserName>
@@ -376,7 +376,7 @@ class EventsTestCase(unittest.TestCase):
         self.assertEqual("test1@test", event.account)
 
     def test_kf_close_session_event(self):
-        from wechatpy.events import KfCloseSessionEvent
+        from aiowechatpy.events import KfCloseSessionEvent
 
         xml = """<xml>
         <ToUserName><![CDATA[touser]]></ToUserName>
@@ -392,7 +392,7 @@ class EventsTestCase(unittest.TestCase):
         self.assertEqual("test1@test", event.account)
 
     def test_kf_switch_session_event(self):
-        from wechatpy.events import KfSwitchSessionEvent
+        from aiowechatpy.events import KfSwitchSessionEvent
 
         xml = """<xml>
         <ToUserName><![CDATA[touser]]></ToUserName>
@@ -410,7 +410,7 @@ class EventsTestCase(unittest.TestCase):
         self.assertEqual("test2@test", event.to_account)
 
     def test_template_send_job_finish_event(self):
-        from wechatpy.events import TemplateSendJobFinishEvent
+        from aiowechatpy.events import TemplateSendJobFinishEvent
 
         xml = """<xml>
         <ToUserName><![CDATA[touser]]></ToUserName>
@@ -428,7 +428,7 @@ class EventsTestCase(unittest.TestCase):
         self.assertEqual("success", event.status)
 
     def test_template_subscribe_msg_popup_event(self):
-        from wechatpy.events import SubscribeMsgPopupEvent
+        from aiowechatpy.events import SubscribeMsgPopupEvent
 
         xml = """<xml>
         <ToUserName><![CDATA[gh_123456789abc]]></ToUserName>
@@ -455,7 +455,7 @@ class EventsTestCase(unittest.TestCase):
         self.assertEqual("VRR0UEO9VJOLs0MHlU0OilqX6MVFDwH3_3gz3Oc0NIc", event.subscribes[0]["TemplateId"])
 
     def test_template_subscribe_msg_change_event(self):
-        from wechatpy.events import SubscribeMsgChangeEvent
+        from aiowechatpy.events import SubscribeMsgChangeEvent
 
         xml = """<xml>
         <ToUserName><![CDATA[gh_123456789abc]]></ToUserName>
@@ -477,7 +477,7 @@ class EventsTestCase(unittest.TestCase):
         self.assertEqual("reject", event.subscribes[0]["SubscribeStatusString"])
 
     def test_template_subscribe_msg_sent_event(self):
-        from wechatpy.events import SubscribeMsgSentEvent
+        from aiowechatpy.events import SubscribeMsgSentEvent
 
         xml = """<xml>
         <ToUserName><![CDATA[gh_123456789abc]]></ToUserName>
@@ -501,7 +501,7 @@ class EventsTestCase(unittest.TestCase):
         self.assertEqual("1700827132819554304", event.subscribes[0]["MsgID"])
 
     def test_shakearound_user_shake_event(self):
-        from wechatpy.events import ShakearoundUserShakeEvent
+        from aiowechatpy.events import ShakearoundUserShakeEvent
 
         xml = """<xml>
         <ToUserName><![CDATA[toUser]]></ToUserName>
@@ -543,7 +543,7 @@ class EventsTestCase(unittest.TestCase):
         self.assertEqual(2, len(event.around_beacons))
 
     def test_wifi_connected_event(self):
-        from wechatpy.events import WiFiConnectedEvent
+        from aiowechatpy.events import WiFiConnectedEvent
 
         xml = """
         <xml>
@@ -566,7 +566,7 @@ class EventsTestCase(unittest.TestCase):
         self.assertEqual("00:1f:7a:ad:5c:a8", event.bssid)
 
     def test_qualification_verify_success_event(self):
-        from wechatpy.events import QualificationVerifySuccessEvent
+        from aiowechatpy.events import QualificationVerifySuccessEvent
 
         xml = """
         <xml>
@@ -582,7 +582,7 @@ class EventsTestCase(unittest.TestCase):
         self.assertTrue(isinstance(event.expired_time, datetime))
 
     def test_qualification_verify_fail_event(self):
-        from wechatpy.events import QualificationVerifyFailEvent
+        from aiowechatpy.events import QualificationVerifyFailEvent
 
         xml = """
         <xml>
@@ -600,7 +600,7 @@ class EventsTestCase(unittest.TestCase):
         self.assertEqual(event.fail_reason, "by time")
 
     def test_naming_verify_success_event(self):
-        from wechatpy.events import NamingVerifySuccessEvent
+        from aiowechatpy.events import NamingVerifySuccessEvent
 
         xml = """
         <xml>
@@ -616,7 +616,7 @@ class EventsTestCase(unittest.TestCase):
         self.assertTrue(isinstance(event.expired_time, datetime))
 
     def test_naming_verify_fail_event(self):
-        from wechatpy.events import NamingVerifyFailEvent
+        from aiowechatpy.events import NamingVerifyFailEvent
 
         xml = """
         <xml>
@@ -634,7 +634,7 @@ class EventsTestCase(unittest.TestCase):
         self.assertEqual(event.fail_reason, "by time")
 
     def test_annual_renew_event(self):
-        from wechatpy.events import AnnualRenewEvent
+        from aiowechatpy.events import AnnualRenewEvent
 
         xml = """
         <xml>
@@ -650,7 +650,7 @@ class EventsTestCase(unittest.TestCase):
         self.assertTrue(isinstance(event.expired_time, datetime))
 
     def test_verify_expired_event(self):
-        from wechatpy.events import VerifyExpiredEvent
+        from aiowechatpy.events import VerifyExpiredEvent
 
         xml = """
         <xml>

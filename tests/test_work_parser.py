@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from wechatpy.work import events, parse_message
+from aiowechatpy.work import events, parse_message
 
 
 class ParseMessageTestCase(unittest.TestCase):
@@ -186,7 +186,7 @@ class ParseMessageTestCase(unittest.TestCase):
         self.assertEqual("www.qq.com", msg.url)
 
     def test_parse_unknown_message(self):
-        from wechatpy.messages import UnknownMessage
+        from aiowechatpy.messages import UnknownMessage
 
         xml = """<xml>
         <ToUserName><![CDATA[toUser]]></ToUserName>

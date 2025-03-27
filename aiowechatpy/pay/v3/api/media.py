@@ -2,7 +2,7 @@
 import hashlib
 import json
 
-from wechatpy.pay.v3.api.base import BaseWeChatPayAPI
+from aiowechatpy.pay.v3.api.base import BaseWeChatPayAPI
 
 
 class WeChatMedia(BaseWeChatPayAPI):
