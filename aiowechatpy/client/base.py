@@ -84,7 +84,7 @@ class BaseWeChatClient:
                 response=res,
             )
 
-        return self._handle_result(res, method, url, result_processor, **kwargs)
+        return await self._handle_result(res, method, url, result_processor, **kwargs)
 
     def _decode_result(self, res):
         try:
@@ -95,7 +95,7 @@ class BaseWeChatClient:
             return res
         return result
 
-    def _handle_result(self, res, method=None, url=None, result_processor=None, **kwargs):
+    async def _handle_result(self, res, method=None, url=None, result_processor=None, **kwargs):
         if not isinstance(res, dict):
             # Dirty hack around asyncio based AsyncWeChatClient
             result = self._decode_result(res)
@@ -120,10 +120,10 @@ class BaseWeChatClient:
                 WeChatErrorCode.EXPIRED_ACCESS_TOKEN.value,
             ):
                 logger.info("Access token expired, fetch a new one and retry request")
-                self.fetch_access_token()
+                await self.fetch_access_token()
                 access_token = self.session.get(self.access_token_key)
                 kwargs["params"]["access_token"] = access_token
-                return self._request(method=method, url_or_endpoint=url, result_processor=result_processor, **kwargs)
+                return await self._request(method=method, url_or_endpoint=url, result_processor=result_processor, **kwargs)
             elif errcode == WeChatErrorCode.OUT_OF_API_FREQ_LIMIT.value:
                 # api freq out of limit
                 raise APILimitedException(errcode, errmsg, client=self, request=res.request, response=res)
