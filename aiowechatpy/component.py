@@ -104,7 +104,7 @@ class BaseWeChatComponent:
             ):
                 logger.info("Component access token expired, fetch a new one and retry request")
                 await self.fetch_access_token()
-                kwargs["params"]["component_access_token"] = self.session.get(
+                kwargs["params"]["component_access_token"] = await self.session.get(
                     f"{self.component_appid}_component_access_token"
                 )
                 return await self._request(method=method, url_or_endpoint=url, **kwargs)
@@ -540,7 +540,7 @@ class ComponentOAuth:
                 WeChatErrorCode.EXPIRED_ACCESS_TOKEN.value,
             ):
                 logger.info("Component access token expired, fetch a new one and retry request")
-                self.component.fetch_access_token()
+                await self.component.fetch_access_token()
                 kwargs["params"]["component_access_token"] = self.component.access_token
                 return await self._request(method=method, url_or_endpoint=url, **kwargs)
             elif errcode == WeChatErrorCode.OUT_OF_API_FREQ_LIMIT.value:

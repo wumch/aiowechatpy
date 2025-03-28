@@ -121,7 +121,7 @@ class BaseWeChatClient:
             ):
                 logger.info("Access token expired, fetch a new one and retry request")
                 await self.fetch_access_token()
-                access_token = self.session.get(self.access_token_key)
+                access_token = await self.session.get(self.access_token_key)
                 kwargs["params"]["access_token"] = access_token
                 return await self._request(method=method, url_or_endpoint=url, result_processor=result_processor, **kwargs)
             elif errcode == WeChatErrorCode.OUT_OF_API_FREQ_LIMIT.value:
