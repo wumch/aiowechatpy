@@ -17,7 +17,7 @@ class WeChatTemplate(BaseWeChatAPI):
 
     API_BASE_URL = "https://api.weixin.qq.com/"
 
-    def set_industry(self, industry_id1, industry_id2):
+    async def set_industry(self, industry_id1, industry_id2):
         """
         【模板消息】设置所属行业
         详情请参考
@@ -27,12 +27,12 @@ class WeChatTemplate(BaseWeChatAPI):
         :param industry_id2: 公众号模板消息所属行业编号
         :return: 返回的 JSON 数据包
         """
-        return self._post(
+        return await self._post(
             "cgi-bin/template/api_set_industry",
             data={"industry_id1": industry_id1, "industry_id2": industry_id2},
         )
 
-    def get_industry(self):
+    async def get_industry(self):
         """
         【模板消息】获取设置的行业信息
         详情请参考
@@ -40,9 +40,9 @@ class WeChatTemplate(BaseWeChatAPI):
 
         :return: 返回的 JSON 数据包
         """
-        return self._get("cgi-bin/template/get_industry")
+        return await self._get("cgi-bin/template/get_industry")
 
-    def get(self, template_id_short):
+    async def get(self, template_id_short):
         """
         【模板消息】获得模板ID
         详情请参考
@@ -51,7 +51,7 @@ class WeChatTemplate(BaseWeChatAPI):
         :param template_id_short: 模板库中模板的编号，有“TM**”和“OPENTMTM**”等形式
         :return: 模板 ID
         """
-        res = self._post(
+        res = await self._post(
             "cgi-bin/template/api_add_template",
             data={"template_id_short": template_id_short},
             result_processor=operator.itemgetter("template_id"),
@@ -60,7 +60,7 @@ class WeChatTemplate(BaseWeChatAPI):
 
     add = get
 
-    def get_all_private_template(self):
+    async def get_all_private_template(self):
         """
         【模板消息】获取模板列表
         详情请参考
@@ -68,9 +68,9 @@ class WeChatTemplate(BaseWeChatAPI):
 
         :return: 返回的 JSON 数据包
         """
-        return self._get("cgi-bin/template/get_all_private_template")
+        return await self._get("cgi-bin/template/get_all_private_template")
 
-    def del_private_template(self, template_id):
+    async def del_private_template(self, template_id):
         """
         【模板消息】删除模板
         详情请参考
@@ -79,9 +79,9 @@ class WeChatTemplate(BaseWeChatAPI):
         :param template_id: 公众帐号下模板消息ID
         :return: 返回的 JSON 数据包
         """
-        return self._post("cgi-bin/template/del_private_template", data={"template_id": template_id})
+        return await self._post("cgi-bin/template/del_private_template", data={"template_id": template_id})
 
-    def add_subscribe_message_template(self, tid: str, keywords: List[int], description: str) -> str:
+    async def add_subscribe_message_template(self, tid: str, keywords: List[int], description: str) -> str:
         """
         【订阅通知】选用模板 (使用 tid 换取 template_id)
         详情请参考
@@ -89,7 +89,7 @@ class WeChatTemplate(BaseWeChatAPI):
 
         返回：添加至帐号下的模板 template_id，发送订阅通知时所需
         """
-        return self._post(
+        return await self._post(
             "wxaapi/newtmpl/addtemplate",
             data={
                 "tid": tid,
@@ -99,15 +99,15 @@ class WeChatTemplate(BaseWeChatAPI):
             result_processor=operator.itemgetter("priTmplId"),
         )
 
-    def del_subscribe_message_template(self, template_id: str):
+    async def del_subscribe_message_template(self, template_id: str):
         """
         【订阅通知】删除模板 (删除 template_id)
         详情请参考
         https://developers.weixin.qq.com/doc/offiaccount/Subscription_Messages/api.html#addTemplate%E9%80%89%E7%94%A8%E6%A8%A1%E6%9D%BF
         """
-        return self._post("wxaapi/newtmpl/deltemplate", data={"priTmplId": template_id})
+        return await self._post("wxaapi/newtmpl/deltemplate", data={"priTmplId": template_id})
 
-    def get_category(self) -> List[Dict]:
+    async def get_category(self) -> List[Dict]:
         """
         【订阅通知】获取公众号类目
         详情请参考:
@@ -118,9 +118,9 @@ class WeChatTemplate(BaseWeChatAPI):
           { "id": 616, "name": "公交" }
         ]
         """
-        return self._get("wxaapi/newtmpl/getcategory", result_processor=operator.itemgetter("data"))
+        return await self._get("wxaapi/newtmpl/getcategory", result_processor=operator.itemgetter("data"))
 
-    def get_subscribe_message_template_keywords(self, tid: str) -> Tuple[int, List[Dict]]:
+    async def get_subscribe_message_template_keywords(self, tid: str) -> Tuple[int, List[Dict]]:
         """
         【订阅通知】获取模板中的关键词
         详情请参考
@@ -134,13 +134,13 @@ class WeChatTemplate(BaseWeChatAPI):
           ]
         )
         """
-        return self._get(
+        return await self._get(
             "wxaapi/newtmpl/getpubtemplatekeywords",
             params={"tid": tid},
             result_processor=operator.itemgetter("count", "data"),
         )
 
-    def get_subscribe_message_template_titles(self, start: int = 0, limit: int = 30) -> Tuple[int, List[Dict]]:
+    async def get_subscribe_message_template_titles(self, start: int = 0, limit: int = 30) -> Tuple[int, List[Dict]]:
         """
         【订阅通知】获取所属类目的公共模板
         详情请参考
@@ -154,13 +154,13 @@ class WeChatTemplate(BaseWeChatAPI):
           ]
         )
         """
-        return self._get(
+        return await self._get(
             "wxaapi/newtmpl/getpubtemplatetitles",
             params={"start": start, "limit": limit},
             result_processor=operator.itemgetter("count", "data"),
         )
 
-    def get_subscribe_message_templates(self) -> List[Dict]:
+    async def get_subscribe_message_templates(self) -> List[Dict]:
         """
         【订阅通知】获取私有模板列表
         详情请参考
@@ -177,6 +177,6 @@ class WeChatTemplate(BaseWeChatAPI):
           }
         ]
         """
-        return self._get("wxaapi/newtmpl/gettemplate", result_processor=operator.itemgetter("data"))
+        return await self._get("wxaapi/newtmpl/gettemplate", result_processor=operator.itemgetter("data"))
 
     # send 接口参见 aiowechatpy.client.api.message.WeChatMessage.send_subscribe_message

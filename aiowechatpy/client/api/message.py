@@ -13,13 +13,13 @@ class WeChatMessage(BaseWeChatAPI):
 
     OPENID_RE = re.compile(r"^[\w\-]{28}$", re.I)
 
-    def _send_custom_message(self, data, account=None):
+    async def _send_custom_message(self, data, account=None):
         data = data or {}
         if account:
             data["customservice"] = {"kf_account": account}
-        return self._post("message/custom/send", data=data)
+        return await self._post("message/custom/send", data=data)
 
-    def send_text(self, user_id, content, account=None):
+    async def send_text(self, user_id, content, account=None):
         """
         发送文本消息
 
@@ -40,9 +40,9 @@ class WeChatMessage(BaseWeChatAPI):
 
         """
         data = {"touser": user_id, "msgtype": "text", "text": {"content": content}}
-        return self._send_custom_message(data, account=account)
+        return await self._send_custom_message(data, account=account)
 
-    def send_image(self, user_id, media_id, account=None):
+    async def send_image(self, user_id, media_id, account=None):
         """
         发送图片消息
 
@@ -63,9 +63,9 @@ class WeChatMessage(BaseWeChatAPI):
 
         """
         data = {"touser": user_id, "msgtype": "image", "image": {"media_id": media_id}}
-        return self._send_custom_message(data, account=account)
+        return await self._send_custom_message(data, account=account)
 
-    def send_voice(self, user_id, media_id, account=None):
+    async def send_voice(self, user_id, media_id, account=None):
         """
         发送语音消息
 
@@ -86,9 +86,9 @@ class WeChatMessage(BaseWeChatAPI):
 
         """
         data = {"touser": user_id, "msgtype": "voice", "voice": {"media_id": media_id}}
-        return self._send_custom_message(data, account=account)
+        return await self._send_custom_message(data, account=account)
 
-    def send_video(self, user_id, media_id, title=None, description=None, account=None):
+    async def send_video(self, user_id, media_id, title=None, description=None, account=None):
         """
         发送视频消息
 
@@ -118,9 +118,9 @@ class WeChatMessage(BaseWeChatAPI):
             video_data["description"] = description
 
         data = {"touser": user_id, "msgtype": "video", "video": video_data}
-        return self._send_custom_message(data, account=account)
+        return await self._send_custom_message(data, account=account)
 
-    def send_music(
+    async def send_music(
         self,
         user_id,
         url,
@@ -156,9 +156,9 @@ class WeChatMessage(BaseWeChatAPI):
             music_data["description"] = description
 
         data = {"touser": user_id, "msgtype": "music", "music": music_data}
-        return self._send_custom_message(data, account=account)
+        return await self._send_custom_message(data, account=account)
 
-    def send_articles(self, user_id, articles, account=None):
+    async def send_articles(self, user_id, articles, account=None):
         """
         发送图文消息
 
@@ -194,9 +194,9 @@ class WeChatMessage(BaseWeChatAPI):
                     "media_id": articles,
                 },
             }
-        return self._send_custom_message(data, account=account)
+        return await self._send_custom_message(data, account=account)
 
-    def send_link(self, user_id, article, account=None):
+    async def send_link(self, user_id, article, account=None):
         """
         发送图文消息(单图文)
 
@@ -218,9 +218,9 @@ class WeChatMessage(BaseWeChatAPI):
                 "thumb_url": article.get("image", article.get("picurl", article.get("thumb_url"))),
             },
         }
-        return self._send_custom_message(data, account=account)
+        return await self._send_custom_message(data, account=account)
 
-    def send_card(self, user_id, card_id, card_ext=None, account=None):
+    async def send_card(self, user_id, card_id, card_ext=None, account=None):
         """
         发送卡券消息
 
@@ -243,9 +243,9 @@ class WeChatMessage(BaseWeChatAPI):
             "msgtype": "wxcard",
             "wxcard": wxcard,
         }
-        return self._send_custom_message(data, account=account)
+        return await self._send_custom_message(data, account=account)
 
-    def send_mini_program_page(self, user_id, miniprogrampage, account=None):
+    async def send_mini_program_page(self, user_id, miniprogrampage, account=None):
         """发送小程序卡片（要求小程序与公众号已关联）
 
         详情请参参考
@@ -261,9 +261,9 @@ class WeChatMessage(BaseWeChatAPI):
             "msgtype": "miniprogrampage",
             "miniprogrampage": miniprogrampage,
         }
-        return self._send_custom_message(data, account=account)
+        return await self._send_custom_message(data, account=account)
 
-    def delete_mass(self, msg_id):
+    async def delete_mass(self, msg_id):
         """
         删除群发消息
 
@@ -281,9 +281,9 @@ class WeChatMessage(BaseWeChatAPI):
             res = client.message.delete_mass('message id')
 
         """
-        return self._post("message/mass/delete", data={"msg_id": msg_id})
+        return await self._post("message/mass/delete", data={"msg_id": msg_id})
 
-    def _send_mass_message(
+    async def _send_mass_message(
         self,
         tag_or_users,
         msg_type,
@@ -324,9 +324,9 @@ class WeChatMessage(BaseWeChatAPI):
             endpoint = "message/mass/preview"
 
         data.update(msg)
-        return self._post(endpoint, data=data)
+        return await self._post(endpoint, data=data)
 
-    def send_mass_text(
+    async def send_mass_text(
         self,
         content,
         tag_or_users=None,
@@ -359,7 +359,7 @@ class WeChatMessage(BaseWeChatAPI):
 
         :return: 返回的 JSON 数据包
         """
-        return self._send_mass_message(
+        return await self._send_mass_message(
             tag_or_users,
             "text",
             {"text": {"content": content}},
@@ -369,7 +369,7 @@ class WeChatMessage(BaseWeChatAPI):
             client_msg_id,
         )
 
-    def send_mass_image(
+    async def send_mass_image(
         self,
         media_id,
         tag_or_users=None,
@@ -402,7 +402,7 @@ class WeChatMessage(BaseWeChatAPI):
 
         :return: 返回的 JSON 数据包
         """
-        return self._send_mass_message(
+        return await self._send_mass_message(
             tag_or_users,
             "image",
             {"image": {"media_id": media_id}},
@@ -412,7 +412,7 @@ class WeChatMessage(BaseWeChatAPI):
             client_msg_id,
         )
 
-    def send_mass_voice(
+    async def send_mass_voice(
         self,
         media_id,
         tag_or_users=None,
@@ -445,7 +445,7 @@ class WeChatMessage(BaseWeChatAPI):
 
         :return: 返回的 JSON 数据包
         """
-        return self._send_mass_message(
+        return await self._send_mass_message(
             tag_or_users,
             "voice",
             {"voice": {"media_id": media_id}},
@@ -455,7 +455,7 @@ class WeChatMessage(BaseWeChatAPI):
             client_msg_id,
         )
 
-    def send_mass_video(
+    async def send_mass_video(
         self,
         media_id,
         tag_or_users=None,
@@ -497,7 +497,7 @@ class WeChatMessage(BaseWeChatAPI):
             video_data["title"] = title
         if description:
             video_data["description"] = description
-        return self._send_mass_message(
+        return await self._send_mass_message(
             tag_or_users,
             "mpvideo",
             {"mpvideo": video_data},
@@ -507,7 +507,7 @@ class WeChatMessage(BaseWeChatAPI):
             client_msg_id,
         )
 
-    def send_mass_article(
+    async def send_mass_article(
         self,
         media_id,
         tag_or_users=None,
@@ -540,7 +540,7 @@ class WeChatMessage(BaseWeChatAPI):
 
         :return: 返回的 JSON 数据包
         """
-        return self._send_mass_message(
+        return await self._send_mass_message(
             tag_or_users,
             "mpnews",
             {"mpnews": {"media_id": media_id}},
@@ -550,7 +550,7 @@ class WeChatMessage(BaseWeChatAPI):
             client_msg_id,
         )
 
-    def get_mass(self, msg_id):
+    async def get_mass(self, msg_id):
         """
         查询群发消息发送状态
 
@@ -568,9 +568,9 @@ class WeChatMessage(BaseWeChatAPI):
             res = client.message.get_mass('mass message id')
 
         """
-        return self._post("message/mass/get", data={"msg_id": msg_id})
+        return await self._post("message/mass/get", data={"msg_id": msg_id})
 
-    def send_template(self, user_id, template_id, data, url=None, mini_program=None):
+    async def send_template(self, user_id, template_id, data, url=None, mini_program=None):
         """
         发送模板消息
 
@@ -591,9 +591,9 @@ class WeChatMessage(BaseWeChatAPI):
             miniprogram=mini_program,
             data=data,
         )
-        return self._post("message/template/send", data=tpl_data)
+        return await self._post("message/template/send", data=tpl_data)
 
-    def get_autoreply_info(self):
+    async def get_autoreply_info(self):
         """
         获取自动回复规则
 
@@ -610,9 +610,9 @@ class WeChatMessage(BaseWeChatAPI):
             info = client.message.get_autoreply_info()
 
         """
-        return self._get("get_current_autoreply_info")
+        return await self._get("get_current_autoreply_info")
 
-    def send_mass_card(
+    async def send_mass_card(
         self,
         card_id,
         tag_or_users=None,
@@ -645,7 +645,7 @@ class WeChatMessage(BaseWeChatAPI):
 
         :return: 返回的 JSON 数据包
         """
-        return self._send_mass_message(
+        return await self._send_mass_message(
             tag_or_users,
             "wxcard",
             {"wxcard": {"card_id": card_id}},
@@ -681,7 +681,7 @@ class WeChatMessage(BaseWeChatAPI):
         encoded_params = urlencode(params)
         return f"{base_url}?{encoded_params}#wechat_redirect"
 
-    def send_subscribe_template(self, openid, template_id, scene, title, data, url=None):
+    async def send_subscribe_template(self, openid, template_id, scene, title, data, url=None):
         """
         一次性订阅消息，通过API推送订阅模板消息给到授权微信用户。
         详情请参阅：
@@ -706,12 +706,12 @@ class WeChatMessage(BaseWeChatAPI):
         }
         if url is not None:
             post_data["url"] = url
-        return self._post(
+        return await self._post(
             "message/template/subscribe",
             data=post_data,
         )
 
-    def send_subscribe_message(self, openid, template_id, data, miniprogram=None, page=None):
+    async def send_subscribe_message(self, openid, template_id, data, miniprogram=None, page=None):
         """
         发送服务号订阅消息
         详情请参考
@@ -726,9 +726,9 @@ class WeChatMessage(BaseWeChatAPI):
             page=page,
             miniprogram=miniprogram,
         )
-        return self._post("message/subscribe/bizsend", data=post_data)
+        return await self._post("message/subscribe/bizsend", data=post_data)
 
-    def send_msg_menu(self, openid, msgmenu, account=None):
+    async def send_msg_menu(self, openid, msgmenu, account=None):
         """
         发送菜单消息
 
@@ -741,4 +741,4 @@ class WeChatMessage(BaseWeChatAPI):
         :return: 返回的 JSON 数据包
         """
         data = {"touser": openid, "msgtype": "msgmenu", "msgmenu": msgmenu}
-        return self._send_custom_message(data, account=account)
+        return await self._send_custom_message(data, account=account)
