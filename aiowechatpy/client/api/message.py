@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from typing import Dict, Any, Literal
 import re
 from urllib.parse import urlencode
 
@@ -727,6 +728,31 @@ class WeChatMessage(BaseWeChatAPI):
             miniprogram=miniprogram,
         )
         return await self._post("message/subscribe/bizsend", data=post_data)
+
+    async def send_subscribe_message_miniprogram(
+        self, *, openid: str, template_id: str, data: Dict[str, Any], page: str,
+        miniprogram_state: Literal['formal', 'trial', 'developer'] = 'formal', lang: str = 'zh_CN'
+    ) -> Dict[str, Any]:
+        """
+        发送小程序订阅消息
+        @see https://developers.weixin.qq.com/miniprogram/dev/OpenApiDoc/mp-message-management/subscribe-message/sendMessage.html
+
+        - touser: 接收者（用户）的 openid。
+        - template_id: 订阅消息的模板id。
+        - data: 模板内容，格式形如: {"phrase3": {"value": "审核通过"}, "name1": {"value": "订阅"}, "date2": {"value": "2019-12-25 09:42"}}
+        - page: 是本小程序内的页面，可以带参数。
+        - miniprogram_state: 跳转小程序类型，跳转小程序类型：developer为开发版；trial为体验版；formal为正式版；默认为正式版。
+        - lang: 进入小程序查看”的语言类型，支持zh_CN(简体中文)、en_US(英文)、zh_HK(繁体中文)、zh_TW(繁体中文)，默认为zh_CN。
+        """
+        post_data = optionaldict(
+            touser=openid,
+            template_id=template_id,
+            data=data,
+            page=page,
+            miniprogram_state=miniprogram_state,
+            lang=lang
+        )
+        return await self._post("message/subscribe/send", data=post_data)
 
     async def send_msg_menu(self, openid, msgmenu, account=None):
         """
